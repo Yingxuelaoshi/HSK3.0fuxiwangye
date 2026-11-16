@@ -366,6 +366,16 @@ body{
   margin-top: 4px;
   line-height: 1.6;
 }
+.sent-item.has-vi{cursor:pointer;}
+.sent-item .sent-vi{
+  display:none;margin-top:9px;padding-top:9px;
+  border-top:1px dashed rgba(0,0,0,.12);
+  font-size:15px;color:var(--ink-2);line-height:1.7;
+}
+.sent-item.show-vi .sent-vi{display:block;animation:sentFade .25s ease;}
+.sent-item .sent-hint{margin-top:6px;font-size:12px;color:var(--ink-3);}
+.sent-item.show-vi .sent-hint{color:var(--accent);}
+@keyframes sentFade{from{opacity:0;transform:translateY(-3px);}to{opacity:1;transform:none;}}
 
 /* ===================== 复习页：四个练习按钮 ===================== */
 .rv-actions{
@@ -5168,7 +5178,7 @@ const SENT1 = [
 {words:["早上","八点","四十","。"],full:"早上八点四十。"},
 {words:["我","上午","十点","十分","有","课","。"],full:"我上午十点十分有课。"},
 {words:["我们","下午","两点","见","吧","。"],full:"我们下午两点见吧。"},
-{words:["喂","，","你","在","哪儿","呢","？"],full:"喂，你在哪呢？"},
+{words:["喂","，","你","在","哪儿","呢","？"],full:"喂，你在哪儿呢？"},
 {words:["我","在","家","里","呢","。"],full:"我在家里呢。"},
 {words:["我","八点","去","医院","上班","。"],full:"我八点去医院上班。"},
 {words:["你","去","超市","买","些","菜","吧","。"],full:"你去超市买些菜吧。"},
@@ -5179,7 +5189,6 @@ const SENT1 = [
 {words:["房间","里","有","一","只","小猫","。"],full:"房间里有一只小猫。"},
 {words:["我们","去","书店","外","吧","。"],full:"我们去书店外吧。"},
 {words:["你","的","手机","在","桌子","上","呢","。"],full:"你的手机在桌子上呢。"},
-{words:["房间","外","有","一","只","小猫","。"],full:"房间外有一只小猫。"},
 {words:["我们","在","哪儿","见","呢","？"],full:"我们在哪儿见呢？"},
 {words:["我们","在","书店","前","见","。"],full:"我们在书店前见。"},
 {words:["我们","在","学校","书店","前","见","吧","。"],full:"我们在学校书店前见吧。"},
@@ -5191,14 +5200,12 @@ const SENT1 = [
 {words:["学校","前边","有","一家","电影院","。"],full:"学校前边有一家电影院。"},
 {words:["我们","晚上","去","那个","电影院","看","电影","吧","。"],full:"我们晚上去那个电影院看电影吧。"},
 {words:["晚上","七点","见","！"],full:"晚上七点见！"},
-{words:["学校","前边","有","一","家","电影院","。"],full:"学校前边有一家电影院。"},
 {words:["电影院","前边","是","一","家","超市","。"],full:"电影院前边是一家超市。"},
 {words:["电影院","前边","不是","超市","。"],full:"电影院前边不是超市。"},
 {words:["桌子","上","没有","小猫","。"],full:"桌子上没有小猫。"},
 {words:["我们","七","点","在","电影院","外边","见","。"],full:"我们七点在电影院外边见。"},
 {words:["他","下午","在","家","里","学","中文","。"],full:"他下午在家里学中文。"},
 {words:["椅子","上","有","一本","书","。"],full:"椅子上有一本书。"},
-{words:["我","明天","上午","在","学校","学习","。"],full:"我明天上午在学校学习。"},
 {words:["这","是","我","的","第","二","本","中文","书","。"],full:"这是我的第二本中文书。"},
 {words:["你","明天","上午","在","哪儿","？"],full:"你明天上午在哪儿？"},
 {words:["明天","星期","六","，","你","做","什么","？"],full:"明天星期六，你做什么？"},
@@ -5289,7 +5296,7 @@ const SENT1 = [
 {words:["今年","我","也","想","去","北京","。"],full:"今年我也想去北京。"},
 {words:["你们","的","飞机","到","河内","要","几","个","小时","？"],full:"你们的飞机到河内要几个小时？"},
 {words:["三","个","小时","。"],full:"三个小时。"},
-{words:["我","可以","去","机场","接","你们","。"],full:"我可以去机场接你们。"}
+{words:["我","可以","去","机场","接","你们","。"],full:"我可以去机场接你们。"},
 ];
 
 /* ---------- HSK1 句子拼音（与 SENT1 顺序一一对应） ---------- */
@@ -5375,7 +5382,6 @@ const SENT1_PINYIN = [
 "Fángjiān li yǒu yì zhī xiǎo māo.",
 "Wǒmen qù shūdiàn wài ba.",
 "Nǐ de shǒujī zài zhuōzi shàng ne.",
-"Fángjiān wài yǒu yì zhī xiǎo māo.",
 "Wǒmen zài nǎr jiàn ne?",
 "Wǒmen zài shūdiàn qián jiàn.",
 "Wǒmen zài xuéxiào shūdiàn qián jiàn ba.",
@@ -5387,14 +5393,12 @@ const SENT1_PINYIN = [
 "Xuéxiào qiánbian yǒu yì jiā diànyǐngyuàn.",
 "Wǒmen wǎnshang qù nàge diànyǐngyuàn kàn diànyǐng ba.",
 "Wǎnshang qī diǎn jiàn!",
-"Xuéxiào qiánbian yǒu yì jiā diànyǐngyuàn.",
 "Diànyǐngyuàn qiánbian shì yì jiā chāoshì.",
 "Diànyǐngyuàn qiánbian bú shì chāoshì.",
 "Zhuōzi shàng méiyǒu xiǎo māo.",
 "Wǒmen qī diǎn zài diànyǐngyuàn wàibian jiàn.",
 "Tā xiàwǔ zài jiā li xué Zhōngwén.",
 "Yǐzi shàng yǒu yì běn shū.",
-"Wǒ míngtiān shàngwǔ zài xuéxiào xuéxí.",
 "Zhè shì wǒ de dì-èr běn Zhōngwén shū.",
 "Nǐ míngtiān shàngwǔ zài nǎr?",
 "Míngtiān xīngqīliù, nǐ zuò shénme?",
@@ -5791,7 +5795,6 @@ const SENT2 = [
 {words:["他","篮球","打","得","很","好","。"],full:"他篮球打得很好。"},
 {words:["你","是","什么","时候","从","胡志明","回来","的","？"],full:"你是什么时候从北京回来的？"},
 {words:["我","一","到","家","啊","，","妈妈","就","打","来","电话","了","。"],full:"我一到家啊，妈妈就打来电话了。"},
-{words:["你","怎么","一","下课","就","往","外","跑","？"],full:"你怎么一下课就往外跑？"},
 {words:["你","是","不是","很","喜欢","打","篮球","？"],full:"你是不是很喜欢打篮球？"},
 {words:["你","还","喜欢","什么","运动","？"],full:"你还喜欢什么运动？"},
 {words:["我喜欢","踢","足球","，","还","喜欢","打篮球","。"],full:"我喜欢踢足球，还喜欢打篮球。"},
@@ -5817,7 +5820,6 @@ const SENT2 = [
 {words:["门口","有","家","奶茶店","。"],full:"门口有家奶茶店。"},
 {words:["我","想","喝","咖啡","，","还是","去","咖啡店","吧","。"],full:"我想喝咖啡，还是去咖啡店吧。"},
 {words:["别","喝","咖啡","，","晚上","就","别想","睡觉","了","。"],full:"别喝咖啡，晚上就别想睡觉了。"},
-{words:["咖啡","店","离","这儿","有点儿","远","。"],full:"咖啡店离这儿有点儿远。"},
 {words:["现在","离","我","的","生日","还有","三","天","。"],full:"现在离我的生日还有三天。"},
 {words:["我们","打车","回去","吧","。"],full:"我们打车回去吧。"},
 {words:["这里","离","家","很","近","，","还是","走路","吧","。"],full:"这里离家很近，还是走路吧。"},
@@ -5893,12 +5895,11 @@ const SENT2 = [
 {words:["我","想","找","他","一","次","。"],full:"我想找他一次。"},
 {words:["她","来过","这儿","两","次","。"],full:"她来过这儿两次。"},
 {words:["我","现在","可以","出国","旅游","了","。"],full:"我现在可以出国旅游了。"},
-{words:["你","想","做","的","事情","很","多","啊","！"],full:"你想做的事情很多啊！"}
+{words:["你","想","做","的","事情","很","多","啊","！"],full:"你想做的事情很多啊！"},
 ];
 
 /* ---------- HSK2 句子拼音（与 SENT2 顺序一一对应） ---------- */
 const SENT2_PINYIN = [
-/* 第1课 · 17句 */
 "Nǐmen jiù shì tā de xuéshēnɡ ba?",
 "Wǒmen shì lái lǚyóu de.",
 "Wǒ shì jīntiān zǎoshang dào de.",
@@ -5916,8 +5917,6 @@ const SENT2_PINYIN = [
 "Lǎoshī ràng wǒ shuō Zhōngwén.",
 "Wǒ yǒushí qù diànyǐngyuàn kàn gè diànyǐng.",
 "Jīntiān de gōngzuò tài duō le.",
-
-/* 第2课 · 15句 */
 "Zhèr yǒu dào Běijīng Dàxué de gōngjiāochē ma?",
 "Wǒmen háishi dǎchē qù ba.",
 "Běijīng Dàxué yǒu sì wàn duō míng xuéshēnɡ ne!",
@@ -5933,8 +5932,6 @@ const SENT2_PINYIN = [
 "Tāmen mài de diànyǐngpiào yě hěn piányi.",
 "Zhè shì péngyou gěi wǒ de bēizi.",
 "Xiànzài xué Zhōngwén de xuéshēnɡ hěn duō.",
-
-/* 第3课 · 9句 */
 "Gōngzuò tài duō le, xiàbān de shíhou méi zuòwán.",
 "Cài dōu zuò hǎo le, guòlai chīfàn ba.",
 "Wǒ xiǎng qù Xī'ān lǚyóu.",
@@ -5944,8 +5941,6 @@ const SENT2_PINYIN = [
 "Zuótiān nǐ zài jiā ma?",
 "Zuótiān xiàwǔ nǐ zuò shénme le?",
 "Nǐ rènshi tā ma?",
-
-/* 第4课 · 18句 */
 "Wǒmen lái guo zhè jiā shāngchǎng ma?",
 "Yīnwèi méi chuān guo, suǒyǐ yào shìshi a!",
 "Nǐ chuān hóngsè de hěn hǎokàn?",
@@ -5964,8 +5959,6 @@ const SENT2_PINYIN = [
 "Zhème duō piàoliang de shūbāo!",
 "Nǐ kànjiàn wǒ de shū le ma?",
 "Jīntiān de fàncài shì bàba zuò de, hǎochī ma?",
-
-/* 第5课 · 10句 */
 "Dì-yī cì qù péngyou jiā, bié wǎn le.",
 "Wǒ bú shàngqu le, jiù zài xiàmian děng nǐ.",
 "Dōu shí'èr diǎn le, wǒmen chīfàn ba.",
@@ -5976,8 +5969,6 @@ const SENT2_PINYIN = [
 "Tā gěi wǒ sòng lái le yì běn shū.",
 "Wǒ hái méi hē guo zhème hǎohē de nǎichá.",
 "Zhuōzi xiàmian yǒu yí gè lǜsè de shūbāo.",
-
-/* 第6课 · 10句 */
 "Míngtiān jiù shì nǚ'ér de shēngrì le.",
 "Tā xǐhuan huàhuà.",
 "Wǒ zài gěi tā mǎi gè dàdà de shēngrì dàngāo.",
@@ -5988,8 +5979,6 @@ const SENT2_PINYIN = [
 "Zhè shì māma sòng gěi nǐ de lǐwù.",
 "Kànkan jīntiān yǒu shénme hǎochī de.",
 "Sòng nǐ de lǐwù, kuài dǎkāi kànkan.",
-
-/* 第7课 · 12句 */
 "Nǐ zěnme yí xiàkè jiù wǎng wài pǎo?",
 "Wǒ gēn tóngxué shuō hǎo le, yìqǐ qù dǎ lánqiú.",
 "Nǐ lánqiú dǎ de zěnmeyàng?",
@@ -5997,13 +5986,10 @@ const SENT2_PINYIN = [
 "Tā lánqiú dǎ de hěn hǎo.",
 "Nǐ shì shénme shíhou cóng Húzhìmíng huílái de?",
 "Wǒ yí dào jiā, māma jiù dǎ lái diànhuà le.",
-"Nǐ zěnme yí xiàkè jiù wǎng wài pǎo?",
 "Nǐ shì bu shì hěn xǐhuan dǎ lánqiú?",
 "Nǐ hái xǐhuan shénme yùndòng?",
 "Wǒ xǐhuan tī zúqiú, hái xǐhuan dǎ lánqiú.",
 "Wǒ xǐhuan yóuyǒng, dàn wǒ yóu de bú kuài.",
-
-/* 第8课 · 13句 */
 "Wǒ juéde zuǒbian de bǐ yòubian de hǎokàn.",
 "Suīrán nǐ wàng le, dànshì wǒ jìde.",
 "Wǎngshang mǎi bǐ zài zhèli mǎi piányi.",
@@ -6017,8 +6003,6 @@ const SENT2_PINYIN = [
 "Nǐ jīntiān huā le bù shǎo qián ba?",
 "Wǒmen guò le yí gè kuàilè de shēngrì.",
 "Wǒ de shǒubiǎo zài nǎr? Nǐ kànjiàn le ma?",
-
-/* 第9课 · 14句 */
 "Kāfēidiàn lí zhèr yǒudiǎnr yuǎn.",
 "Zǒu bàn gè duō xiǎoshí jiù dào le.",
 "Wǒ qù mǎi bēi nǎichá.",
@@ -6027,14 +6011,11 @@ const SENT2_PINYIN = [
 "Ménkǒu yǒu jiā nǎichádiàn.",
 "Wǒ xiǎng hē kāfēi, háishi qù kāfēidiàn ba.",
 "Bié hē kāfēi, wǎnshang jiù bié xiǎng shuìjiào le.",
-"Kāfēidiàn lí zhèr yǒudiǎnr yuǎn.",
 "Xiànzài lí wǒ de shēngrì hái yǒu sān tiān.",
 "Wǒmen dǎchē huíqu ba.",
 "Zhèli lí jiā hěn jìn, háishi zǒulù ba.",
 "Zǒu bàn gè xiǎoshí jiù dào le.",
 "Wǒmen chūqu zǒu yi zǒu ba.",
-
-/* 第10课 · 13句 */
 "Nǐmen míngtiān kāixué, nǐ zhǔnbèi hǎo le ma?",
 "Míngtiān jiù kāixué a?",
 "Dìdi shǒu hěn xiǎo.",
@@ -6048,8 +6029,6 @@ const SENT2_PINYIN = [
 "Jīntiān kǎoshì de zěnmeyàng?",
 "Fàncài kuàiyào zuò hǎo le, nǐ jiào dìdi yìqǐ qù xǐshǒu ba?",
 "Huǒchē kuài kāi le.",
-
-/* 第11课 · 10句 */
 "Wǒ tóuténg, bú tài shūfu.",
 "Nà nǐ zài zhèr zuòzhe.",
 "Wǒ zuì xǐhuan chī Yuènán cài.",
@@ -6060,8 +6039,6 @@ const SENT2_PINYIN = [
 "Xiànzài lùshang chē duō, hái xiàzhe xuě, wǒ kāi màn yìdiǎnr.",
 "Wǒ xiànzài méi nàme téng le.",
 "Shēntǐ bù shūfu shí gèng yào hǎohǎo chīfàn.",
-
-/* 第12课 · 11句 */
 "Xiànzài lùshang chē duō, hái xiàzhe xuě.",
 "Nǐ zuì xǐhuan chī shénme?",
 "Wǒ zhèli bǐ Běijīng lěng duō le.",
@@ -6073,8 +6050,6 @@ const SENT2_PINYIN = [
 "Yǒu shì jìde gěi wǒ dǎ diànhuà.",
 "Nǐ zhēn ài pǎobù a!",
 "Wǒ xiànzài zuò dìtiě zhǎo nǐ, yíhuìr lóuxià jiàn.",
-
-/* 第13课 · 15句 */
 "Zuótiān bǐ jīntiān xià de dà.",
 "Nǐ pǎobù pǎo de bǐ wǒ kuài.",
 "Shíjiān guò de zhēn kuài a!",
@@ -6090,8 +6065,6 @@ const SENT2_PINYIN = [
 "Zhège shǒujī hěn hǎo a!",
 "Tā jiāo de hěn hǎo.",
 "Wǒmen ài shàng Zhōngwén kè.",
-
-/* 第14课 · 11句 */
 "Yí gè rén guònián duō méi yìsi a!",
 "Wǒ jiā jiù zài qiánmiàn nàge lóu, yǒu shíjiān lái wán.",
 "Wǒ lóuxià zhùzhe yì jiā wàiguó rén.",
@@ -6103,8 +6076,6 @@ const SENT2_PINYIN = [
 "Qǐng nǐ jièshào yíxià zìjǐ.",
 "Wǒ gēn nǐ yìqǐ guòqu.",
 "Tā jīngcháng pǎo shànglái zhǎo wǒ wán.",
-
-/* 第15课 · 11句 */
 "Wǒ xiǎng zài qù yí cì Zhōngguó.",
 "Wǒ xiǎng zài chī yí cì kǎoyā.",
 "Wǒ de gāozhōng tóngxué jiù zài Yíhéyuán shàngbān.",
@@ -6641,7 +6612,6 @@ const VOCAB3 = [
 
 /* ---------- HSK3 句子（按课文句型整理） ---------- */
 const SENT3 = [
-/* ===== 第1课 ===== */
 {words:["他们","看","上","去","有点儿","像","。"],full:"他们看上去有点儿像。"},
 {words:["这些","菜","看","起","来","都","很","好吃","。"],full:"这些菜看起来都很好吃。"},
 {words:["那","个","新","来","的","老师","看上去","很","年轻","。"],full:"那个新来的老师看上去很年轻。"},
@@ -6657,8 +6627,6 @@ const SENT3 = [
 {words:["别","着急，","我们","拿","着","护照","和","机票","，","去","服务台","问问","吧","。"],full:"别着急，我们拿着护照和机票，去服务台问问吧。"},
 {words:["我们","站","到","中间","去","吧","，","这样","他们","好","找","一下","。"],full:"我们站到中间去吧，这样他们好找一下。"},
 {words:["他们","应该","快","出来","了","。"],full:"他们应该快出来了。"},
-
-/* ===== 第2课 ===== */
 {words:["我","现在","还","真是","又饿","又","渴","。"],full:"我现在还真是又饿又渴。"},
 {words:["那个","女孩儿","又高","又","漂亮","。"],full:"那个女孩儿又高又漂亮。"},
 {words:["这个","饭馆","的","菜","又便宜","又","好吃","。"],full:"这个饭馆的菜又便宜又好吃。"},
@@ -6670,12 +6638,9 @@ const SENT3 = [
 {words:["她","写","汉字","写得","又","快","又漂亮","。"],full:"她写的字写得又快又漂亮。"},
 {words:["你","点","的","这些","菜","真","不错","。"],full:"你点的这些菜真不错。"},
 {words:["你","可以","拿","走","这","张","菜单","。"],full:"你可以拿走这张菜单。"},
-{words:["他们","家","还","能","送","外卖","？"],full:"你可以拿走这张菜单。"},
 {words:["这个","鸡肉","饭","太","好吃","了","，","我","要","再","来","吃","一次","。"],full:"这个鸡肉饭太好吃了，我要再来吃一次。"},
 {words:["那","真","是","太","方便","了","！"],full:"那真是太方便了！"},
 {words:["你","想","去哪儿","，","我们","就","去","哪儿","。"],full:"你想去哪儿，我们就去哪儿。"},
-
-/* ===== 第3课 ===== */
 {words:["这个","小区","环境","挺","好","的","。"],full:"这个小区环境挺好的。"},
 {words:["这家","饭馆的","菜","挺","好吃","的","。"],full:"这家饭馆的菜挺好吃的。"},
 {words:["我","这","几","天","忙","坏","了","。"],full:"我这几天忙坏了。"},
@@ -6687,9 +6652,6 @@ const SENT3 = [
 {words:["你","觉得","这","个","小区","怎么样","？"],full:"你觉得这个小区怎么样？"},
 {words:["我","今天","早上","来","的","时候","，","灯","还","开","着","。"],full:"我今天早上来的时候，灯还开着。"},
 {words:["我","这","几","天","忙","坏了","，","可能","走","的","时候","忘","关","了","。"],full:"这几天忙坏了，可能走的时候忘关了。"},
-
-
-/* ===== 第4课 ===== */
 {words:["她","一","件","衣服","都","不","想","买","。"],full:"她一件衣服都不想买。"},
 {words:["我","一个","中国","电影","也","没","看","过","。"],full:"我一个中国电影也没看过。"},
 {words:["我","一点儿","东西","也","不","想","吃","。"],full:"我一点儿东西也不想吃。"},
@@ -6707,9 +6669,6 @@ const SENT3 = [
 {words:["星期六","上午","十","点","一刻","起飞","。"],full:"星期六上午十点一刻起飞。"},
 {words:["宾馆","选","好","了","吗","？"],full:"宾馆选好了吗?"},
 {words:["你","看看","要","带","什么","东西","？"],full:"你看看要带什么东西？"},
-
-
-/* ===== 第5课 ===== */
 {words:["这样","的","照片","才","好看","。"],full:"这样的照片才好看。"},
 {words:["现在","天气","好","得","很","。"],full:"现在天气好得很。"},
 {words:["房间","里面","热","得","很","。"],full:"房间里面热得很。"},
@@ -6727,8 +6686,6 @@ const SENT3 = [
 {words:["这些","照片","是","谁","给","您","照","的","？"],full:"这些照片是谁给您照的？"},
 {words:["我","喜欢","您","大笑","的","这","张","，","看起来","很","漂亮","。"],full:"我喜欢您大笑的这张，看起来很漂亮。"},
 {words:["我","可以","比较","一下","你们","两个","谁","的","水平","高","。"],full:"我可以比较一下你们两个谁的水平高。"},
-
-/* ===== 第6课 ===== */
 {words:["咱们","该","买","去","上海","的","票","了","。"],full:"咱们该买去上海的票了。"},
 {words:["八点了","，","该","上课","了","。"],full:"八点了，该上课了。"},
 {words:["已经","很","晚","了","，","我","该","睡觉了","。"],full:"已经很晚了，我该睡觉了。"},
@@ -6743,8 +6700,6 @@ const SENT3 = [
 {words:["高铁","又快","又","舒服","，","你","一定","会","喜欢","的","。"],full:"高铁又快又舒服，你一定会喜欢的。"},
 {words:["过了","前面","的","路口","就","到","高铁站","了","。"],full:"过了前面的路口就到高铁站了。"},
 {words:["不用","拿","票","，","刷","护照","就","能","检票","进站","。"],full:"不用拿票，刷护照就能检票进站。"},
-
-/* ===== 第7课 ===== */
 {words:["咱们","可以","走","着","去","。"],full:"咱们可以走着去。"},
 {words:["弟弟","吃","着","苹果","写","作业","。"],full:"弟弟吃着苹果写作业。"},
 {words:["他们","坐","着","看","电视","。"],full:"他们坐着看电视。"},
@@ -6760,8 +6715,6 @@ const SENT3 = [
 {words:["大小","合适","，","但","我","觉得","那","条","裙子比","短裤","更","好看","。"],full:"大小合适，但我觉得那条裙子比短裤更好看。"},
 {words:["西瓜","又大","又","新鲜","，","不","甜","不要","钱","！"],full:"西瓜又大又新鲜，不甜不要钱！"},
 {words:["帮","我","选","个","大","点儿","的","，","再","来","两","斤","香蕉","。"],full:"帮我选个大点儿的，再来两斤香蕉。"},
-
-/* ===== 第8课 ===== */
 {words:["我","今年","胖了","十","多","斤","，","不能","再胖","下去","了","。"],full:"我今年胖了十多斤，不能再胖下去了。"},
 {words:["她","读完","了","第一个","问题","，","后面","的","你","读","下去","。"],full:"她读完了第一个问题，后面的你读下去。"},
 {words:["这","几","天","太","热了","，","如果","再","热","下去","就","不能","出门","了","。"],full:"这几天太热了，如果再热下去就不能出门了。"},
@@ -6780,8 +6733,6 @@ const SENT3 = [
 {words:["是不是","感冒","了","？","发烧","吗？"],full:"是不是感冒了？发烧吗？"},
 {words:["你","怎么","突然","住院","了","？","大家","都","很","担心你","。"],full:"你怎么突然住院了？大家都很担心你。"},
 {words:["医生","也","这么","说","，","但是","还得","做","完","检查","才","能","知道","。"],full:"医生也这么说，但是还得做完检查才能知道。"},
-
-/* ===== 第9课 ===== */
 {words:["为了","准备","运动会","，","你们","几","个","男生","每天","都","练","球","。"],full:"为了准备运动会，你们几个男生每天都练球。"},
 {words:["为了","考","上","大学","，","她","每天","努力","学习","。"],full:"为了考上大学，她每天努力学习。"},
 {words:["为了","早点儿","到","家","，","我","打算","坐","飞机","回去","。"],full:"为了早点儿到家，我打算坐飞机回去。"},
@@ -6795,8 +6746,6 @@ const SENT3 = [
 {words:["你","跟","我们","一起","打","羽毛球","吧","？"],full:"你跟我们一起打羽毛球吧？"},
 {words:["你","想","得","太","多","了","！","大家","打球","只是","为了","锻炼","身体","。"],full:"你想得太多了！大家打球只是为了锻炼身体。"},
 {words:["我","喜欢","看","体育","比赛","，","最爱","看","的","就是","奥运会","。"],full:"我喜欢看体育比赛，最爱看的就是奥运会。"},
-
-/* ===== 第10课 ===== */
 {words:["我","会","把","这些","题","都","记","在","本子","上","。"],full:"我会把这些题都记在本子上。"},
 {words:["老师","把","作业本","放","到","桌子","上","了","。"],full:"老师把作业本放到桌子上了。"},
 {words:["你","不能","把","名字","写","在","这里","。"],full:"你不能把名字写在这里。"},
@@ -6813,8 +6762,6 @@ const SENT3 = [
 {words:["我","觉得","历史","有点儿","难","，","你","呢","？"],full:"我觉得历史有点儿难，你呢？"},
 {words:["明天","还","有","考试","呢，","别","想","那么","多","了","，","先","复习","外语","吧","。"],full:"明天还有考试呢，别想那么多了，先复习外语吧。"},
 {words:["我","现在","上","初中","二","年级","，","学习","越来越","忙","。"],full:"我现在上初中二年级，学习越来越忙。"},
-
-/* ===== 第11课 ===== */
 {words:["我们","用","会议室","的","电脑","还是","自己的","笔记本电脑","？"],full:"我们用会议室的电脑还是自己的笔记本电脑？"},
 {words:["会议室","的","电脑或者","自己的","电脑","都","可以","。"],full:"会议室的电脑或者自己的电脑都可以。"},
 {words:["你","可以","坐","地铁","或者打车","去","学校","。"],full:"你可以坐地铁或者打车去学校。"},
@@ -6834,8 +6781,6 @@ const SENT3 = [
 {words:["好几个","同事","都","休假","了","，","开会","前","这么","多","工作","我","怕","干","不","完","。"],full:"好几个同事都休假了，开会前这么多工作我怕干不完。"},
 {words:["明天","开会","前","我","要","发","到","公司","的","邮箱","里","。"],full:"明天开会前我要发到公司的邮箱里。"},
 {words:["虽然","去","上海","可能","会","有","更","好","的","机会","，","但是","对","我","来说，","生活","也","很","重要","。"],full:"虽然去上海可能会有更好的机会，但是对我来说，生活也很重要。"},
-
-/* ===== 第12课 ===== */
 {words:["我们","或者","今天","去","电影院","看","电影，","或者","明天","在","家","看电影","。"],full:"我们或者今天去电影院看电影，或者明天在家看电影。"},
 {words:["晚饭","你","自己","选","，","或者","吃","中国菜，","或者吃日本菜","，","或者吃","泰国","菜。"],full:"晚饭你自己选，或者吃中国菜，或者吃日本菜，或者吃泰国菜。"},
 {words:["雨","已经","下","起来","了","，","咱们","快点儿","走","吧","。"],full:"雨已经下起来了，咱们快点儿走吧。"},
@@ -6852,8 +6797,6 @@ const SENT3 = [
 {words:["这个","季节","天气","变化","很","快","。"],full:"这个季节天气变化很快。"},
 {words:["您","来","这里","已经","一","年","多","了","，","习惯","了","吧","？"],full:"您来这里已经一年多了，习惯了吧？"},
 {words:["别的","早就","习惯了","，","就是","天气","我","还","不","太","习惯","。"],full:"别的早就习惯了，就是天气我还不太习惯。"},
-
-/* ===== 第13课 ===== */
 {words:["你们","有","时间","的话","，","就","来","我","家","做客","。"],full:"你们有时间的话，就来我家做客。"},
 {words:["你","觉得","满意","的话","，","咱们","就","买","。"],full:"你觉得满意的话，咱们就买。"},
 {words:["明天","天气","好","的话","，","我","就","去","爬山","。"],full:"明天天气好的话，我就去爬山。"},
@@ -6871,8 +6814,6 @@ const SENT3 = [
 {words:["我","准备","了","一","个","小","礼物","，","希望","你","喜欢","！"],full:"我准备了一个小礼物，希望你喜欢！"},
 {words:["我","去","把","盘子","拿","过来，","咱们","一边吃","蛋糕","，","一边","聊天儿","吧","。"],full:"我去把盘子拿过来，咱们一边吃蛋糕，一边聊天儿吧。"},
 {words:["我","的","新","邻居","是","来自","英国","的","夫妻","。"],full:"我的新邻居是来自英国的夫妻。"},
-
-/* ===== 第14课 ===== */
 {words:["这","本","书","被","别人","借","走","了","。"],full:"这本书被别人借走了。"},
 {words:["水果","可能","被","弟弟","吃","了","。"],full:"水果可能被弟弟吃了。"},
 {words:["我们","俩","经常","被","叫","错","名字","。"],full:"我们俩经常被叫错名字。"},
@@ -6889,8 +6830,6 @@ const SENT3 = [
 {words:["我","的","校园卡","不见","了","，","没有","卡","进","不","去","图书馆","。"],full:"我的校园卡不见了，没有卡进不去图书馆。"},
 {words:["我忘记了","，","可能","被","我","放","在","家里","了","。"],full:"我忘记了，可能被我放在家里了。"},
 {words:["一想到","要","在","校长、","老师","和","那么","多","同学","面前","表演","，","我","就","有些","紧张","。"],full:"一想到要在校长、老师和那么多同学面前表演，我就有些紧张。"},
-
-/* ===== 第15课 ===== */
 {words:["这","几","年","小区","根据","他们","的","需要","，","有","了","很多","变化","。"],full:"这几年小区根据他们的需要，有了很多变化。"},
 {words:["根据","要求","，","我们","必须","参加","明天","的","会议","。"],full:"根据要求，我们必须参加明天的会议。"},
 {words:["老师","根据","每个","学生的","兴趣","，","选择","了","不一样","的","书","。"],full:"老师根据每个学生的兴趣，选择了不一样的书。"},
@@ -6906,8 +6845,6 @@ const SENT3 = [
 {words:["小区","里","有","很","多","树","，","孩子","们","放学","后","就","在树下","做","游戏","。"],full:"小区里有很多树，孩子们放学后就在树下做游戏。"},
 {words:["南京","有","两","千","年","以上","的","历史","，","有","老城、","老街","。"],full:"南京有两千年以上的历史，有老城、老街。"},
 {words:["除了","这些","以外","，","你","再","告诉","我","一些","外地","人","不","知道","的","地方","。"],full:"除了这些以外，你再告诉我一些外地人不知道的地方。"},
-
-/* ===== 第16课 ===== */
 {words:["关于","这个","问题","，","我","得","慢慢","给","你","讲","。"],full:"关于这个问题，我得慢慢给你讲。"},
 {words:["关于","他","的","要求","，","我们","还要","开会","以后","再","决定","。"],full:"关于他的要求，我们还要开会以后再决定。"},
 {words:["关于","比赛","的","时间","，","我","明天","一定","告诉","大家","。"],full:"关于比赛的时间，我明天一定告诉大家。"},
@@ -6922,9 +6859,6 @@ const SENT3 = [
 {words:["大熊猫","跟","猫","有","关系","吗","？"],full:"大熊猫跟猫有关系吗？"},
 {words:["在","全世界","，","只有","中国","才","有","野生","的","大熊猫","。"],full:"在全世界，只有中国才有野生的大熊猫。"},
 {words:["这","只","大熊猫","一会儿","爬","上去，","一会儿跳","下来","，","可爱","极","了","！"],full:"这只大熊猫一会儿爬上去，一会儿跳下来，可爱极了！"},
-
-
-/* ===== 第17课 ===== */
 {words:["别","再","向","前","走","了","。"],full:"别再向前走了。"},
 {words:["以后","我","要","多","向","认真","的","人","学习","。"],full:"以后我要多向认真的人学习。"},
 {words:["孩子","一","看见","妈妈","，","就","向","她","跑","过去","了","。"],full:"孩子一看见妈妈，就向她跑过去了。"},
@@ -6940,9 +6874,6 @@ const SENT3 = [
 {words:["太阳","从","西边","出来","了","？"],full:"太阳从西边出来了？"},
 {words:["我","不想","现在","就","工作","，","还","想","继续","学习","。"],full:"我不想现在就工作，还想继续学习。"},
 {words:["我","认为","只有","想","清楚","自己","真正","喜欢","什么","，","才","能","做出","最","合适","的","选择","。"],full:"我认为只有想清楚自己真正喜欢什么，才能做出最合适的选择。"},
-
-
-/* ===== 第18课 ===== */
 {words:["春节","大概","放","七","八","天","假","。"],full:"春节大概放七八天假。"},
 {words:["教室","里","来","了","五","六","个","学生","。"],full:"教室里来了五六个学生。"},
 {words:["这些","照片","是","三","四","年","前","照","的","吧","？"],full:"这些照片是三四年前照的吧？"},
@@ -6961,7 +6892,7 @@ const SENT3 = [
 {words:["我","刚刚","看","视频","学会","了","包饺子","，","我跟你们","一起","包","吧","。"],full:"我刚刚看视频学会了包饺子，我跟你们一起包吧。"},
 {words:["那","是","三四","年","前","吧","？"],full:"那是三四年前吧？"},
 {words:["他","高中","的","时候","想","学","医","，","从","那时","起","就","努力","学习","。"],full:"他高中的时候想学医，从那时起就努力学习。"},
-{words:["从","那次","旅游","起","，","我","对","中国","文化","更","有","兴趣","了","。"],full:"从那次旅游起，我对中国文化更有兴趣了。"}
+{words:["从","那次","旅游","起","，","我","对","中国","文化","更","有","兴趣","了","。"],full:"从那次旅游起，我对中国文化更有兴趣了。"},
 ];
 
 /* ==========================================================================
@@ -6975,8 +6906,8 @@ const SENT1_LESSONS = [
   5,5,5,5,5,5,5,5,5,5,5,5,5,5,
   6,6,6,6,6,6,6,6,6,6,6,6,6,6,
   7,7,7,7,7,7,7,7,7,
-  8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-  9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+  8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+  9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
   10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
   11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,
   12,12,12,12,12,12,12,12,12,12,12,
@@ -6992,9 +6923,9 @@ const SENT2_LESSONS = [
   4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
   5,5,5,5,5,5,5,5,5,5,
   6,6,6,6,6,6,6,6,6,6,
-  7,7,7,7,7,7,7,7,7,7,7,7,
+  7,7,7,7,7,7,7,7,7,7,7,
   8,8,8,8,8,8,8,8,8,8,8,8,8,
-  9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+  9,9,9,9,9,9,9,9,9,9,9,9,9,
   10,10,10,10,10,10,10,10,10,10,10,10,10,
   11,11,11,11,11,11,11,11,11,11,
   12,12,12,12,12,12,12,12,12,12,12,
@@ -7004,42 +6935,693 @@ const SENT2_LESSONS = [
 ];
 
 const SENT3_LESSONS = [
-  /* 第1课 */
   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  /* 第2课 */
-  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-  /* 第3课 */
+  2,2,2,2,2,2,2,2,2,2,2,2,2,2,
   3,3,3,3,3,3,3,3,3,3,3,
-  /* 第4课 */
   4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-  /* 第5课 */
   5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-  /* 第6课 */
   6,6,6,6,6,6,6,6,6,6,6,6,6,6,
-  /* 第7课 */
   7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-  /* 第8课 */
   8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-  /* 第9课 */
   9,9,9,9,9,9,9,9,9,9,9,9,9,
-  /* 第10课 */
   10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
-  /* 第11课 */
   11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,
-  /* 第12课 */  
-12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,
-  /* 第13课 */
+  12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,
   13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,
-  /* 第14课 */
   14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
-  /* 第15课 */
   15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,
-  /* 第16课 */
   16,16,16,16,16,16,16,16,16,16,16,16,16,16,
-  /* 第17课 */
   17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,
-  /* 第18课 */
   18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18
+];
+
+/* ==========================================================================
+   句型越南语译文（与 SENT1 / SENT2 / SENT3 按下标一一对应）
+   ========================================================================== */
+const SENT1_VI = [
+"Xin chào!",
+"Tạm biệt!",
+"Xin chào mọi người!",
+"Em chào thầy cô ạ!",
+"Xin chào các bạn!",
+"Xin chào các bạn học!",
+"Không có chi!",
+"Bạn tên là gì?",
+"Tôi tên là Bạch Gia Nguyệt.",
+"Tôi là học sinh.",
+"Tôi cũng là học sinh.",
+"Tôi là người Việt Nam.",
+"Giáo viên tiếng Trung của tôi là người Trung Quốc.",
+"Bạn là người nước nào?",
+"Cô ấy là bạn gái của tôi.",
+"Chị gái tôi là giáo viên.",
+"Đây là ai?",
+"Công việc của bạn bận không?",
+"Tôi không bận lắm.",
+"Chúng tôi rất nhớ bạn.",
+"Tôi cũng nhớ các bạn.",
+"Cô ấy rất bận.",
+"Cô ấy có bao nhiêu học sinh?",
+"Cô ấy có bao nhiêu con?",
+"Cô ấy có hai mươi học sinh.",
+"Tôi có hai con.",
+"Tôi không có chị gái.",
+"Cô ấy có một chị gái.",
+"Tôi có hai anh trai.",
+"Tôi không có anh trai.",
+"Đây là con trai của ngài phải không?",
+"Nhà bạn có bao nhiêu người?",
+"Nhà tôi có bốn người.",
+"Con trai bạn mấy tuổi?",
+"Con gái bạn bao nhiêu tuổi?",
+"Tôi mười lăm tuổi.",
+"Năm nay anh ấy mười tám tuổi.",
+"Hôm nay là ngày mấy?",
+"Hôm nay là ngày 8 tháng 9.",
+"Hôm nay là thứ mấy?",
+"Hôm nay là Chủ nhật.",
+"Hôm nay tôi nghỉ.",
+"Bạn biết nấu ăn không?",
+"Tôi biết nấu ăn.",
+"Tôi biết nấu mì.",
+"Tôi không biết làm sủi cảo.",
+"Tôi không biết nấu món ăn.",
+"Đây là máy tính mới của bạn phải không?",
+"Đây không phải máy tính mới của tôi.",
+"Máy tính mới của bạn đẹp thật!",
+"Tôi rất thích nó.",
+"Số điện thoại của bạn là bao nhiêu?",
+"Ngày mai bạn đi đâu?",
+"Tôi muốn đi siêu thị.",
+"Chúng ta đi siêu thị mua đồ.",
+"Bạn đi siêu thị mua gì?",
+"Tôi muốn mua sữa.",
+"Chủ nhật chúng ta đi đâu ăn tối?",
+"Tôi muốn ăn bánh bao.",
+"Anh ấy muốn ăn mì.",
+"Cô ấy muốn ăn sủi cảo.",
+"Chúng ta đi bằng cách nào?",
+"Anh ấy đi siêu thị bằng gì?",
+"Chúng ta đi bằng taxi.",
+"Họ đi siêu thị bằng taxi.",
+"Tôi tan làm lúc sáu giờ rưỡi tối.",
+"Bây giờ mấy giờ?",
+"Tám giờ bốn mươi phút sáng.",
+"Tôi có tiết lúc mười giờ mười phút sáng.",
+"Hai giờ chiều chúng ta gặp nhé.",
+"Alo, bạn ở đâu vậy?",
+"Tôi đang ở nhà.",
+"Tôi tám giờ đến bệnh viện làm việc.",
+"Bạn đi siêu thị mua ít đồ ăn nhé.",
+"Bố tôi làm việc ở bệnh viện.",
+"Con mèo ở trên bàn.",
+"Bên ngoài phòng có một con mèo.",
+"Con mèo này đẹp thật!",
+"Trong phòng có một con mèo.",
+"Chúng ta ra ngoài hiệu sách nhé.",
+"Điện thoại của bạn ở trên bàn đấy.",
+"Chúng ta gặp ở đâu nhỉ?",
+"Chúng ta gặp trước hiệu sách.",
+"Chúng ta gặp trước hiệu sách của trường nhé.",
+"Chiều hai giờ bạn đến được không?",
+"Tôi ăn trưa ở trường.",
+"Bệnh viện lớn có nhiều bệnh nhân.",
+"Bác sĩ rất bận.",
+"Sáng mai tôi học ở trường.",
+"Phía trước trường có một rạp chiếu phim.",
+"Tối chúng ta đến rạp chiếu phim đó xem phim nhé.",
+"Tối bảy giờ gặp nhé!",
+"Phía trước rạp phim là một siêu thị.",
+"Phía trước rạp phim không phải siêu thị.",
+"Trên bàn không có mèo con.",
+"Chúng ta gặp ngoài rạp phim lúc bảy giờ.",
+"Chiều anh ấy học tiếng Trung ở nhà.",
+"Trên ghế có một quyển sách.",
+"Đây là quyển sách tiếng Trung thứ hai của tôi.",
+"Sáng mai bạn ở đâu?",
+"Ngày mai thứ Bảy, bạn làm gì?",
+"Ban ngày tôi đọc sách ở nhà.",
+"Tối tôi đi hát bên ngoài với bạn bè.",
+"Bạn hát rất hay.",
+"Ngài làm gì vào thứ Bảy?",
+"Tôi nấu ăn ở nhà.",
+"Tôi xem TV ở nhà.",
+"Tôi chơi với chó con ở nhà.",
+"Tôi cũng có một chú chó con.",
+"Táo ở đây rẻ thật!",
+"Táo ba tệ năm một cân.",
+"Bộ quần áo này một trăm tệ.",
+"Xin hỏi, có cốc không?",
+"Cốc ở bên này.",
+"Một cái bao nhiêu tiền?",
+"Trái cây ở đây rất nhiều!",
+"Ngài muốn mua gì?",
+"Tôi muốn mua hai cân táo.",
+"Phòng tôi không lớn lắm.",
+"Quả táo đó ngon.",
+"Cửa hàng này có rất nhiều quần áo!",
+"Đây là quần áo con gái mặc.",
+"Quần áo con trai ở kia.",
+"Cái cốc này thế nào?",
+"Món này không ngon lắm.",
+"Tôi đang học đại học.",
+"Khi nào bạn đến được nhà hàng?",
+"Tôi không biết.",
+"Bạn đã đến trường chưa?",
+"Nó có phải ở phía sau siêu thị không?",
+"Anh ấy đi đâu rồi?",
+"Món này không ngon lắm.",
+"Bạn còn đang học đại học à?",
+"Các bạn học có bận không?",
+"Chúng tôi có rất nhiều tiết học.",
+"Tôi học y, chúng tôi có nhiều tiết học.",
+"Các học sinh đang lên lớp.",
+"Chúng ta đọc sách nhé.",
+"Tôi đang xem TV.",
+"Tôi đang học, không muốn đi.",
+"Em trai còn đang ngủ.",
+"Anh trai nói với tôi là anh ấy không muốn đi siêu thị.",
+"Mẹ định đi siêu thị.",
+"Tôi định ở nhà học tiếng Trung.",
+"Hôm qua trời có tuyết.",
+"Hôm nay thời tiết thế nào?",
+"Trời ở đây không đẹp lắm, đang mưa.",
+"Mưa to không?",
+"Tôi thấy rất lạnh.",
+"Em trai dậy chưa?",
+"Hôm qua tôi đến bệnh viện khám bệnh.",
+"Hôm qua bạn làm gì rồi?",
+"Bạn thấy thế nào?",
+"Về nhà rồi uống thêm chút nước nóng.",
+"Ngoài kia đang rơi tuyết, lạnh quá!",
+"Cho tôi một cốc trà.",
+"Tôi có thể hỏi ngài thêm một câu hỏi được không?",
+"Bạn có câu hỏi gì?",
+"Cửa hàng nhỏ đó có bán điện thoại không?",
+"Bạn có thể gọi điện hỏi xem.",
+"Tôi xem quyển sách này được không?",
+"Các bạn có thể xem quyển sách này.",
+"Bạn xem qua đi.",
+"Mời ngài ngồi, ngài uống gì?",
+"Cho tôi một cốc sữa.",
+"Ngài còn cần gì nữa?",
+"Tôi cần một cân sủi cảo.",
+"Tôi đã xem một bộ phim.",
+"Tôi đã mua một máy tính mới.",
+"Hôm qua tôi không đến cửa hàng mua đồ.",
+"Các bạn biết nói tiếng Hán không?",
+"Chúng tôi đều biết viết chữ Hán.",
+"Mọi người đừng nói chuyện nhé!",
+"Các bạn học đều không nghe thấy.",
+"Năm sau con gái lên cấp hai.",
+"Con trai cũng đã lên tiểu học.",
+"Nhà chúng tôi có một em học sinh tiểu học.",
+"Muộn quá rồi, đi ngủ thôi.",
+"Tôi đã viết rất nhiều chữ Hán.",
+"Các bạn thích ăn món nào?",
+"Tôi thích món này, cũng thích món kia.",
+"Các món này đều rất ngon.",
+"Mọi người ăn thêm chút nhé.",
+"Các bạn đều muốn đi đâu?",
+"Năm ngoái tôi và bạn trai đã đi Sài Gòn.",
+"Năm nay tôi cũng muốn đi Bắc Kinh.",
+"Máy bay của các bạn đến Hà Nội mất mấy tiếng?",
+"Ba tiếng.",
+"Tôi có thể ra sân bay đón các bạn."
+];
+
+const SENT2_VI = [
+"Các bạn chính là học sinh của cô ấy phải không?",
+"Chúng tôi đến để du lịch.",
+"Tôi đến vào sáng nay.",
+"Cô ấy đã mời chúng tôi ăn vịt quay Bắc Kinh.",
+"Bạn có việc gì có thể nhờ Lý Văn giúp.",
+"Mấy hôm nay tôi không bận, các bạn có việc cứ tìm tôi.",
+"Chúng tôi không đi bằng taxi.",
+"Táo mua ở đâu vậy?",
+"Bạn đến trường bằng xe phải không?",
+"Hôm nay bạn đến trường lúc mấy giờ?",
+"Ngày mai bạn có thời gian không?",
+"Tôi đã đến Sài Gòn rồi.",
+"Tôi muốn nhờ bạn một việc.",
+"Mẹ gọi các con về nhà.",
+"Giáo viên bắt tôi nói tiếng Trung.",
+"Thỉnh thoảng tôi đến rạp chiếu phim xem phim.",
+"Công việc hôm nay quá nhiều.",
+"Ở đây có xe buýt đến Đại học Bắc Kinh không?",
+"Chúng ta hay đi taxi thôi.",
+"Đại học Bắc Kinh có hơn bốn mươi nghìn học sinh đấy!",
+"Phía kia có một phòng học.",
+"Bến xe hơi xa một chút.",
+"Taxi quá đắt, chúng ta hay đi xe buýt thôi.",
+"Bạn biết được bằng cách nào?",
+"Tôi cũng muốn đến đây học.",
+"Trong nhà còn táo không?",
+"Chó con nhà bạn mấy tuổi rồi?",
+"Hai quả táo này hơn năm tệ.",
+"Trong phòng học có hơn hai mươi học sinh.",
+"Vé phim họ bán cũng rất rẻ.",
+"Đây là cốc bạn tôi tặng.",
+"Bây giờ học sinh học tiếng Trung rất nhiều.",
+"Công việc quá nhiều, đến giờ tan làm chưa xong.",
+"Món ăn đã nấu xong cả rồi, sang ăn cơm nhé.",
+"Tôi muốn đi du lịch Tây An.",
+"Tôi muốn nghỉ một chút, uống một cốc nước.",
+"Chúng ta thu xếp thời gian đi du lịch, được không?",
+"Ăn quả táo đi, tôi rửa sạch cả rồi.",
+"Hôm qua bạn ở nhà không?",
+"Chiều hôm qua bạn làm gì rồi?",
+"Bạn có quen cô ấy không?",
+"Chúng ta đã đến trung tâm thương mại này chưa?",
+"Vì chưa mặc bao giờ, nên phải thử chứ!",
+"Bạn mặc đồ màu đỏ rất đẹp.",
+"Tôi thấy mình mặc đồ đỏ cũng đẹp.",
+"Chúng ta vào xem nhé.",
+"Bạn muốn mua gì?",
+"Tôi muốn mua một cái quần.",
+"Táo siêu thị này ngon không?",
+"Tối nay tôi muốn xem một bộ phim.",
+"Tôi muốn mua cái quần màu trắng này.",
+"Bạn thử cái quần màu đỏ kia xem.",
+"Tôi chưa đến nhà anh ấy bao giờ, nên nhờ anh ấy ra bến xe đón tôi.",
+"Hôm nay bạn về sớm thế!",
+"Thời tiết đẹp thế này, sao bạn không ra ngoài chơi?",
+"Tôi muốn mua một cặp sách mới.",
+"Nhiều cặp sách đẹp thế!",
+"Bạn thấy sách của tôi chưa?",
+"Cơm canh hôm nay bố nấu, ngon không?",
+"Lần đầu đến nhà bạn, đừng đến muộn.",
+"Tôi không lên nữa, đợi bạn ở dưới đây thôi.",
+"Mười hai giờ rồi, chúng ta ăn cơm thôi.",
+"Trà sữa là ông nội mua.",
+"Mẹ nói trước mười một giờ đến là được.",
+"Họ đều là bạn tôi, bạn có việc có thể nhờ họ giúp.",
+"Đây là quà chuẩn bị cho các con.",
+"Cô ấy mang đến tặng tôi một quyển sách.",
+"Tôi chưa từng uống trà sữa ngon thế này.",
+"Dưới bàn có một cặp sách màu xanh lá.",
+"Ngày mai là sinh nhật con gái rồi.",
+"Cô ấy thích vẽ tranh.",
+"Tôi mua thêm cho cô ấy một chiếc bánh sinh nhật thật to.",
+"Bạn mở ra xem thích không nhé.",
+"Bạn không nói, tôi thật sự đã quên.",
+"Chúng ta chuẩn bị quà gì cho cô ấy nhỉ?",
+"Tôi biết bạn thích ăn sủi cảo.",
+"Đây là quà mẹ tặng bạn.",
+"Xem hôm nay có món gì ngon.",
+"Quà tặng bạn, mau mở ra xem đi.",
+"Sao bạn vừa hết giờ đã chạy ra ngoài?",
+"Tôi đã hẹn bạn học cùng đi chơi bóng rổ.",
+"Bạn chơi bóng rổ thế nào?",
+"Tôi chạy không nhanh lắm.",
+"Anh ấy chơi bóng rổ rất tốt.",
+"Bạn về từ Bắc Kinh lúc nào vậy?",
+"Tôi vừa về đến nhà, mẹ đã gọi điện tới.",
+"Bạn có phải rất thích chơi bóng rổ không?",
+"Bạn còn thích môn thể thao nào nữa?",
+"Tôi thích đá bóng, còn thích cả bóng rổ.",
+"Tôi thích bơi, nhưng bơi không nhanh lắm.",
+"Tôi thấy cái bên trái đẹp hơn cái bên phải.",
+"Dù bạn đã quên, nhưng tôi vẫn nhớ.",
+"Mua trên mạng rẻ hơn mua ở đây.",
+"Con trai cao không bằng anh ấy.",
+"Bạn xem, hai chiếc đồng hồ này thế nào?",
+"Hôm nay lạnh hơn hôm qua.",
+"Tôi nhớ bạn thích phim tình cảm, chúng ta xem phim tình cảm kia, được không?",
+"Tôi thấy trên mạng nói bộ phim này thú vị hơn phim tình cảm kia.",
+"Tôi đi mua vé.",
+"Hôm nay là tháng mấy ngày mấy?",
+"Hôm nay bạn tiêu khá nhiều tiền phải không?",
+"Chúng ta đã có một sinh nhật vui vẻ.",
+"Đồng hồ của tôi ở đâu? Bạn thấy chưa?",
+"Quán cà phê hơi xa đây một chút.",
+"Đi bộ hơn nửa tiếng là đến.",
+"Tôi đi mua một cốc trà sữa.",
+"Bạn xem cái quần màu đen này thế nào?",
+"Hôm qua không lạnh bằng hôm nay.",
+"Cửa có một quán trà sữa.",
+"Tôi muốn uống cà phê, vậy thì đến quán cà phê thôi.",
+"Đừng uống cà phê, tối đừng nghĩ đến chuyện ngủ.",
+"Bây giờ còn ba ngày nữa đến sinh nhật tôi.",
+"Chúng ta đi taxi về nhé.",
+"Đây gần nhà, hay đi bộ thôi.",
+"Đi bộ nửa tiếng là đến.",
+"Chúng ta ra ngoài đi dạo nhé.",
+"Ngày mai các bạn khai giảng, bạn chuẩn bị xong chưa?",
+"Ngày mai đã khai giảng á?",
+"Tay em trai nhỏ lắm.",
+"Việc này anh ấy biết.",
+"Bạn đang làm gì vậy?",
+"Lần này bố giúp bạn, lần sau bạn tự chuẩn bị.",
+"Ngày mai thi, tôi đang đọc sách.",
+"Những từ này phải xem kỹ.",
+"Những từ này tôi xem rồi, nghĩa cũng đều hiểu cả.",
+"Tôi mua trà sữa rồi, ở trên bàn đấy, tự đi lấy nhé.",
+"Hôm nay thi thế nào?",
+"Cơm canh sắp nấu xong, bạn gọi em trai cùng đi rửa tay nhé.",
+"Tàu hỏa sắp chạy rồi.",
+"Tôi đau đầu, không được khỏe lắm.",
+"Vậy bạn ngồi đây chờ.",
+"Tôi thích nhất món ăn Việt Nam.",
+"Đã hết giờ rồi, sao bạn vẫn chưa về nhà?",
+"Mấy hôm nay bạn hay đau đầu, đi bệnh viện khám xem đi.",
+"Tôi muốn nghỉ một chút, bây giờ không động được, động một chút là đau.",
+"Bạn ngồi đây, tôi đi lấy xe, lát nữa chở bạn đến bệnh viện.",
+"Bây giờ đường nhiều xe, lại còn đang rơi tuyết, tôi chạy chậm một chút.",
+"Bây giờ tôi đỡ đau hơn rồi.",
+"Khi sức khỏe không được khỏe, càng phải ăn uống đầy đủ.",
+"Bây giờ đường nhiều xe, lại còn đang rơi tuyết.",
+"Bạn thích ăn nhất món gì?",
+"Ở đây lạnh hơn Bắc Kinh nhiều.",
+"Thời tiết chỗ bạn thế nào?",
+"Mấy hôm nay Bắc Kinh tuy trời nắng, nhưng hơi lạnh.",
+"Đi máy bay nhanh hơn đi tàu hỏa rất nhiều.",
+"Thời tiết xấu, khi ra ngoài bạn mặc thêm áo vào.",
+"Mấy hôm nay tôi học online, chưa ra ngoài lần nào.",
+"Có việc nhớ gọi điện cho tôi.",
+"Bạn thích chạy bộ thật đấy!",
+"Bây giờ tôi đi tàu điện ngầm đến tìm bạn, lát nữa gặp ở tầng dưới.",
+"Hôm qua mưa to hơn hôm nay.",
+"Bạn chạy nhanh hơn tôi.",
+"Thời gian trôi nhanh thật!",
+"Cửa phòng học đang mở, nhưng trong không có ai.",
+"Lớp các bạn có bao nhiêu học sinh?",
+"Bạn thấy cái quần này dài không?",
+"Chị gái cao hơn tôi một chút.",
+"Tôi thích nhất là uống cà phê.",
+"Các bạn đều học được rồi chứ?",
+"Anh ấy đưa cho tôi một cốc nước.",
+"Sở thích của cô ấy chính là đọc sách.",
+"Anh ấy bán cho tôi một quyển sách tiếng Trung.",
+"Điện thoại này tốt thật!",
+"Cô ấy dạy rất tốt.",
+"Chúng tôi thích học tiết tiếng Trung.",
+"Một mình ăn Tết chán biết bao!",
+"Nhà tôi ở tòa nhà phía trước kia, có thời gian đến chơi nhé.",
+"Ở tầng dưới nhà tôi có một gia đình người nước ngoài sinh sống.",
+"Từ hôm nay nhiều hơn hôm qua mười từ.",
+"Dưới nhà bạn có một người đang đứng.",
+"Bạn một mình ở đây chán biết bao!",
+"Tôi mời họ ăn một bữa cơm.",
+"Như vậy bạn có việc gì có thể tìm họ giúp.",
+"Mời bạn giới thiệu về bản thân.",
+"Tôi đi cùng bạn qua đó.",
+"Cô ấy hay chạy lên tìm tôi chơi.",
+"Tôi muốn đến Trung Quốc thêm một lần nữa.",
+"Tôi muốn ăn vịt quay thêm một lần nữa.",
+"Bạn học cấp ba của tôi làm việc ngay tại Di Hòa Viên.",
+"Tôi nhớ vé vào cửa đây chưa đến mười tệ.",
+"Bạn đã một năm chưa về nước phải không?",
+"Tôi nhớ vé máy bay lần đó của bạn rất rẻ.",
+"Tháng sáu tôi về một lần.",
+"Tôi muốn tìm anh ấy một lần.",
+"Cô ấy đã đến đây hai lần.",
+"Bây giờ tôi có thể đi du lịch nước ngoài rồi.",
+"Việc bạn muốn làm nhiều thật đấy!"
+];
+
+const SENT3_VI = [
+"Họ trông có vẻ hơi giống nhau.",
+"Các món này nhìn đều rất ngon.",
+"Giáo viên mới đến kia trông rất trẻ.",
+"Hình như tôi đã thấy chiếc vali này ở đâu rồi.",
+"Bạn ăn chút gì rồi hãy đi.",
+"Lý Văn có phải là bạn trẻ tóc ngắn mặc đồ đen kia không?",
+"Hai người hôm qua đi xem phim với Gia Nguyệt là bạn của tôi.",
+"Bộ quần áo trắng tôi mới mua ở đâu?",
+"Hôm nào chúng ta cùng đi đá bóng nhé.",
+"Hành lý của tôi sao vẫn chưa ra?",
+"Hành lý của bạn trông thế nào?",
+"Chúng ta nhanh chóng tìm người hỏi xem, trong vali có khá nhiều đồ quan trọng.",
+"Đừng vội, chúng ta cầm hộ chiếu và vé máy bay, đến quầy dịch vụ hỏi xem nhé.",
+"Chúng ta ra giữa đứng đi, như vậy họ dễ tìm hơn.",
+"Họ chắc sắp ra rồi.",
+"Bây giờ tôi đói khát thật sự.",
+"Cô gái kia vừa cao vừa xinh.",
+"Món ăn quán này vừa rẻ vừa ngon.",
+"Món nào cũng ngon.",
+"Chuyến du lịch này, tôi đi đâu cũng được.",
+"Các bạn thích ăn gì thì gọi món nấy.",
+"Bạn thấy cái nào đẹp thì mua cái ấy.",
+"Nhà mới của anh ấy vừa lớn vừa sạch sẽ.",
+"Chữ cô ấy viết vừa nhanh vừa đẹp.",
+"Những món bạn gọi thật ổn.",
+"Bạn có thể cầm thực đơn này đi.",
+"Cơm gà này ngon quá, tôi phải đến ăn lại một lần nữa.",
+"Thế thật là tiện lợi!",
+"Bạn muốn đi đâu, chúng ta sẽ đi đó.",
+"Khu dân cư này môi trường khá ổn.",
+"Món ăn quán này khá ngon.",
+"Mấy hôm nay tôi bận rộn chết đi được.",
+"Ngân hàng Trung Quốc rất gần, đi bộ vài phút là đến.",
+"Chiều tôi phải đến bệnh viện, rất muộn mới về được.",
+"Sáng tôi năm giờ đã dậy.",
+"Đi tàu hỏa đến Bắc Kinh, mất năm tiếng mới đến.",
+"Trường cấp hai của anh ấy hơi xa nhà, mình đổi một căn nhà gần hơn nhé.",
+"Bạn thấy khu dân cư này thế nào?",
+"Sáng nay tôi đến lúc đèn vẫn còn bật.",
+"Mấy hôm nay bận quá, có lẽ lúc đi quên tắt.",
+"Cô ấy một bộ quần áo cũng không muốn mua.",
+"Tôi một phim Trung Quốc cũng chưa xem.",
+"Tôi chẳng muốn ăn gì cả.",
+"Anh ấy hoàn toàn không có hứng thú với chơi bóng.",
+"Đồng cỏ chẳng hề lạnh.",
+"Khách sạn này khác với những khách sạn khác.",
+"Điện thoại mới anh ấy mua giống hệt của tôi.",
+"Ngoại trừ tôi ra, mọi người đều đang chơi điện thoại.",
+"Ngoại trừ chữ Hán này ra, chữ khác tôi đều biết viết.",
+"Ngoài chiếc vali này ra, còn đồ gì khác không?",
+"Ngoài hát ra, anh ấy còn thích khiêu vũ.",
+"Kỳ nghỉ này đi đâu chơi một chút nhé.",
+"Bây giờ đi biển hơi lạnh.",
+"Vé máy bay đi chơi mua xong chưa?",
+"Thứ Bảy mười giờ mười lăm phút sáng cất cánh.",
+"Khách sạn chọn xong chưa?",
+"Bạn xem cần mang đồ gì?",
+"Kiểu ảnh thế này mới đẹp.",
+"Bây giờ thời tiết đẹp tuyệt.",
+"Trong phòng nóng lắm.",
+"Tôi thấy leo núi mệt lắm.",
+"Bức ảnh nào trong số này cũng rất đẹp.",
+"Quả táo nào cũng to cả.",
+"Tôi muốn ra ngoài chụp ảnh, nhưng ngày nào trời cũng mưa.",
+"Phía sau đi qua hai người.",
+"Phía trước chạy tới rất nhiều xe.",
+"Mấy người đi xuống từ trên lầu.",
+"Bạn nghe hết buổi hòa nhạc thì đến nhà tôi ăn cơm.",
+"Tôi ăn sáng xong thì đi học.",
+"Hôm qua chúng tôi hết giờ là về nhà.",
+"Chúng ta đi leo núi được không?",
+"Ai chụp những bức ảnh này cho ngài?",
+"Tôi thích bức ngài cười to này, trông rất đẹp.",
+"Tôi có thể so sánh hai bạn ai trình độ cao hơn.",
+"Chúng ta nên mua vé đi Thượng Hải rồi.",
+"Tám giờ rồi, đến giờ lên lớp.",
+"Đã khuya rồi, tôi nên đi ngủ.",
+"Nếu không đi sai, thì hai mươi phút trước đã đến rồi.",
+"Nếu bạn cần giúp đỡ, cứ gọi điện cho tôi.",
+"Nếu có thời gian, tôi sẽ đi Thượng Hải chơi vài ngày.",
+"Người phía trước ngày càng đông.",
+"Tôi ngày càng thích cuộc sống ở đây.",
+"Tôi chưa đi tàu cao tốc bao giờ, mình đi tàu cao tốc, được không?",
+"Tàu cao tốc từ Bắc Kinh đến Thượng Hải rất nhiều, rất tiện.",
+"Đã nghe nói về tàu cao tốc từ lâu, cuối cùng cũng được đi.",
+"Tàu cao tốc vừa nhanh vừa thoải mái, bạn chắc chắn sẽ thích.",
+"Qua ngã tư phía trước là đến ga tàu cao tốc.",
+"Không cần lấy vé, quét hộ chiếu là có thể vào ga.",
+"Chúng ta có thể đi bộ đến.",
+"Em trai vừa ăn táo vừa làm bài tập.",
+"Họ ngồi xem TV.",
+"Tiếng Trung của anh ấy không tốt hơn bạn.",
+"Anh ấy chạy không nhanh hơn tôi bao nhiêu.",
+"Miếng dưa hấu ướp lạnh này ngọt hết ý.",
+"Hè năm nay nóng hết ý.",
+"Tôi thích quyển sách này hết ý.",
+"TV bây giờ vừa rẻ, lại còn dùng rất tiện.",
+"Chiếc xe đạp này mua hồi cô ấy tám tuổi.",
+"Trong trung tâm thương mại có một cửa hàng xe đạp, mình mua cho cô ấy một chiếc mới nhé.",
+"Bạn xem tôi mặc quần short màu vàng này đẹp không?",
+"Size vừa vặn, nhưng tôi thấy cái váy kia đẹp hơn quần short.",
+"Dưa hấu vừa to vừa tươi, không ngon không lấy tiền!",
+"Giúp tôi chọn quả to hơn, lại thêm hai cân chuối.",
+"Năm nay tôi tăng hơn mười cân, không thể béo thêm nữa.",
+"Cô ấy đọc xong câu hỏi đầu tiên, phần còn lại bạn đọc tiếp.",
+"Mấy hôm nay nóng quá, nếu nóng tiếp thì không ra cửa được nữa.",
+"Hôm qua bơi xong, tai tôi hơi đau liên tục.",
+"Hè năm nay chỉ mưa hai lần.",
+"Tiểu Trương tháng sau kết hôn với bạn gái anh ấy.",
+"Lần trước tôi đến bệnh viện đã gần hai năm rồi.",
+"Cô ấy về nhà đã hai tháng.",
+"Khai giảng đã hơn ba tuần rồi.",
+"Loại thuốc này mỗi ngày trước khi ngủ uống một lần.",
+"Chúng tôi quyết định sau giờ làm cùng đi xem phim.",
+"Thi xong rồi, mình cùng đi du lịch nhé.",
+"Chiều nào tôi cũng đến chạy bộ một tiếng.",
+"Trình độ các bạn cao quá, tôi chơi chẳng ra gì.",
+"Bạn sao thế? Trông có vẻ không khỏe lắm.",
+"Có phải bị cảm không? Sốt không?",
+"Sao bạn bất ngờ nhập viện? Mọi người đều rất lo cho bạn.",
+"Bác sĩ cũng nói vậy, nhưng phải làm xong xét nghiệm mới biết được.",
+"Để chuẩn bị hội thao, mấy bạn nam mỗi ngày đều luyện tập chơi bóng.",
+"Để thi đậu đại học, cô ấy mỗi ngày đều học hành chăm chỉ.",
+"Để về nhà sớm, tôi định đi máy bay về.",
+"Chơi không tốt không sao.",
+"Tôi nhiều năm chưa chơi cầu lông, gần như quên cách chơi rồi.",
+"Trận bóng đá hôm nay tôi xem càng lúc càng sốt ruột.",
+"Chúng ta leo càng lúc càng mệt.",
+"Xin lỗi, hôm qua tôi quên trả bạn thẻ học sinh.",
+"Bạn định tham gia hội thao không?",
+"Tôi muốn tham gia giải quần vợt, dạo gần đây cứ luyện tập.",
+"Bạn cùng chúng tôi chơi cầu lông nhé?",
+"Bạn nghĩ nhiều quá! Mọi người chơi bóng chỉ để rèn luyện thân thể.",
+"Tôi thích xem thi đấu thể thao, thích nhất là Thế vận hội.",
+"Tôi sẽ ghi tất cả các bài tập này vào vở.",
+"Giáo viên đặt vở bài tập lên bàn rồi.",
+"Bạn không được viết tên ở đây.",
+"Trong học tập, gặp vấn đề gì đều có thể hỏi tôi.",
+"Ngày mai bạn trả sách lại cho tôi sau.",
+"Tôi đã tặng quà cho cô ấy.",
+"Bạn mang giúp quyển sách này đến cho giáo viên.",
+"Trong cuộc sống, chúng ta sẽ gặp rất nhiều vấn đề.",
+"Dưới sự giúp đỡ của giáo viên, thành tích của tôi đã cải thiện.",
+"Toán của bạn ngày càng tốt, bạn có thể chia sẻ cách học không?",
+"Không có phương pháp gì đặc biệt, nghe giảng chăm chú, ghi chú đầy đủ.",
+"Các bài tập giáo viên viết trên bảng đều rất quan trọng.",
+"Ghi chú khá quan trọng, mỗi ngày trước khi làm bài tôi đều xem lại một lượt.",
+"Tôi thấy lịch sử hơi khó, bạn thì sao?",
+"Ngày mai còn thi, đừng nghĩ nhiều nữa, ôn tập ngoại ngữ trước đã.",
+"Bây giờ tôi học lớp hai cấp hai, học tập ngày càng bận.",
+"Chúng ta dùng máy tính phòng họp hay máy tính xách tay của mình?",
+"Máy tính phòng họp hoặc máy tính riêng đều được.",
+"Bạn có thể đi tàu điện ngầm hoặc đi taxi đến trường.",
+"Xem ra tôi không có cách giải quyết vấn đề này.",
+"Muộn thế này, xem ra hôm nay anh ấy không đến nữa.",
+"Thang máy hỏng rồi, xem ra mình chỉ có thể đi bộ xuống.",
+"Tôi cùng ngài hoàn thành nốt những công việc này.",
+"Mẹ giặt sạch quần áo rồi.",
+"Anh ấy vẫn chưa kết nối xong máy tính xách tay.",
+"Đối với tôi, cuộc sống cũng rất quan trọng, tôi không muốn rời xa gia đình vì công việc hay học tập.",
+"Đối với cô ấy, học tiếng Hán rất thú vị.",
+"Đối với trẻ con, chơi cũng là một cách học.",
+"Máy tính kết nối xong chưa?",
+"Bây giờ chẳng thấy gì cả.",
+"Nghe thấy tiếng, nhưng tiếng hơi nhỏ, nghe không rõ.",
+"Bạn thấy lão Trương chưa?",
+"Mấy đồng nghiệp đều nghỉ phép, trước cuộc họp nhiều việc thế này tôi sợ không làm xong.",
+"Trước cuộc họp ngày mai tôi phải gửi vào email công ty.",
+"Dù đi Thượng Hải có thể có cơ hội tốt hơn, nhưng đối với tôi, cuộc sống cũng rất quan trọng.",
+"Chúng ta hoặc hôm nay đến rạp xem phim, hoặc ngày mai xem phim ở nhà.",
+"Tối bạn tự chọn, hoặc ăn món Trung, hoặc món Nhật, hoặc món Thái.",
+"Mưa đã bắt đầu rơi, mình đi nhanh thôi.",
+"Mùa xuân Bắc Kinh dễ chịu nhất, thời tiết không lạnh không nóng.",
+"Bộ quần áo này không to không nhỏ, vừa vặn.",
+"Sống hơn một năm nay, tôi vẫn thích bốn mùa Bắc Kinh hơn.",
+"Luyện nửa năm nay, trình độ vẽ của anh ấy đã cải thiện khá nhiều.",
+"Cuộc chạy dài 5000 mét, không ngờ tôi chạy xong được.",
+"Cây trên con phố này đều nở hoa.",
+"Tuần trước tôi đi công viên đi thuyền, hoa trong công viên cũng nở rồi.",
+"Hôm nay là ngày làm việc, người chắc không đông lắm.",
+"Vừa nãy trời còn nắng to, sao đột nhiên lại nổi gió?",
+"Ngày nào tôi cũng mang ô trong cặp, chỉ hôm nay quên mang.",
+"Mùa này thời tiết thay đổi rất nhanh.",
+"Ngài đến đây đã hơn một năm, quen rồi chứ?",
+"Những thứ khác đã quen từ lâu, chỉ có thời tiết là tôi chưa quen lắm.",
+"Các bạn có thời gian thì đến nhà tôi chơi.",
+"Nếu bạn thấy ưng ý, mình mua.",
+"Ngày mai trời đẹp thì tôi đi leo núi.",
+"Bạn mở âm thanh to quá.",
+"Anh ấy đã đá bóng vào chưa?",
+"Bạn viết chữ quá nhỏ, tôi không nhìn rõ.",
+"Mình vừa ăn bánh ngọt vừa trò chuyện nhé.",
+"Tôi thích vừa chạy bộ vừa nghe nhạc.",
+"Bạn không nên vừa lái xe vừa gọi điện.",
+"Hôm nay tôi đãi khách, các bạn thích ăn gì gọi món nấy!",
+"Cách chế biến món ăn miền Nam khác với món miền Bắc của các bạn.",
+"Lần đầu tôi mời hàng xóm mới đến chơi, cứ lo chưa chuẩn bị đủ gì đó.",
+"Tôi đã cho nước uống và rượu vào tủ lạnh, khách đến rồi lấy ra sau.",
+"Cảm ơn các bạn đến dự tiệc sinh nhật con trai tôi.",
+"Tôi chuẩn bị một món quà nhỏ, hy vọng bạn thích!",
+"Tôi đi lấy đĩa sang, mình vừa ăn bánh ngọt vừa trò chuyện nhé.",
+"Hàng xóm mới của tôi là một cặp vợ chồng đến từ Anh Quốc.",
+"Quyển sách này bị người khác mượn mất rồi.",
+"Trái cây có thể bị em trai ăn mất rồi.",
+"Hai chúng tôi thường bị gọi nhầm tên.",
+"Tôi phải đến thư viện mượn sách trước, rồi đi bơi.",
+"Bạn mua vé vào cửa trước, rồi đến đây tìm tôi.",
+"Các bạn về phòng nghỉ một lát trước, rồi ra ăn tối sau.",
+"Chúng tôi đều thích nghe bạn hát, bạn hãy tin vào bản thân.",
+"Béo gì chứ, bạn trông không béo cũng không gầy.",
+"Vội gì chứ, lát nữa là đến.",
+"Quyển từ điển tôi mượn tốt nhất trả trong hôm nay, nhưng tôi không có thời gian đi.",
+"Chiều tôi chỉ có hai tiết học, có thể giúp bạn đến thư viện trả sách.",
+"Tôi đến thư viện mấy lần, quyển sách này đều bị người khác mượn mất.",
+"Hôm nay tôi bận lắm, phải đến thư viện mượn sách trước, rồi đi bơi.",
+"Thẻ học sinh của tôi mất rồi, không có thẻ không vào được thư viện.",
+"Tôi quên mất rồi, có lẽ để ở nhà.",
+"Nghĩ đến việc phải biểu diễn trước hiệu trưởng, giáo viên và rất nhiều bạn học, tôi hơi hồi hộp.",
+"Mấy năm nay khu dân cư đã có nhiều thay đổi theo nhu cầu của họ.",
+"Theo yêu cầu, chúng tôi bắt buộc phải tham dự cuộc họp ngày mai.",
+"Giáo viên căn cứ vào sở thích từng học sinh mà chọn sách khác nhau.",
+"Tôi phải giải thích cho ngài từng chút một.",
+"Trình độ tiếng Hán của học sinh ngày một nâng cao.",
+"Họ đi vào từng nhóm hai người một.",
+"Theo người Trung Quốc chúng tôi, sông Hoàng Hà giống như mẹ, nuôi dưỡng chúng tôi mấy nghìn năm.",
+"Theo các đồng nghiệp, cô ấy làm việc rất nghiêm túc.",
+"Theo tôi, đọc sách mỗi ngày là một thói quen rất tốt.",
+"Chuyện buồn chẳng bao lâu là quên.",
+"Hai tiếng nghe có vẻ dài, nhưng chẳng mấy chốc đã trôi qua.",
+"Khu dân cư môi trường khá ổn, xung quanh mua sắm cũng tiện, sang đường là siêu thị.",
+"Trong khu dân cư có nhiều cây, trẻ con sau giờ học chơi trò chơi dưới gốc cây.",
+"Nam Kinh có lịch sử hơn hai nghìn năm, có phố cổ, đường cổ.",
+"Ngoài những thứ này ra, bạn kể thêm cho tôi vài địa điểm người nơi khác không biết.",
+"Về vấn đề này, tôi phải giải thích cho bạn từ từ.",
+"Về yêu cầu của anh ấy, chúng ta còn phải họp xong mới quyết định được.",
+"Về thời gian thi đấu, ngày mai tôi nhất định sẽ thông báo mọi người.",
+"Nói chung, gấu trúc mỗi ngày ngủ rất nhiều lần.",
+"Nói chung, loại cây này mỗi năm nở hoa một lần.",
+"Nói chung, học ngoại ngữ cần luyện tập nhiều.",
+"Anh trai ăn nhiều hơn em trai ba cái sủi cảo.",
+"Tôi đến muộn hơn anh ấy mười phút.",
+"Các bạn nuôi con mèo con này bao lâu rồi?",
+"Ngày đầu tiên nhìn thấy nó, nó vừa bẩn vừa nhỏ.",
+"Nó lại rất đáng yêu, lát thì ngủ dưới chân bạn, lát thì trèo trên người bạn.",
+"Gấu trúc có liên quan đến mèo không?",
+"Trên toàn thế giới, chỉ có Trung Quốc mới có gấu trúc hoang dã.",
+"Chú gấu trúc này lát thì trèo lên, lát thì nhảy xuống, đáng yêu hết ý!",
+"Đừng đi về phía trước nữa.",
+"Sau này tôi phải học tập nhiều hơn những người chăm chỉ.",
+"Đứa trẻ vừa thấy mẹ, đã chạy về phía mẹ.",
+"Bạn không phải thích chơi máy tính sao? Bạn có thể xem sách liên quan đến máy tính.",
+"Bạn không phải nói hôm nay có việc sao? Sao lại đến?",
+"Thi không phải tháng sau sao? Sao hôm nay bạn đã bắt đầu ôn tập?",
+"Tôi vẫn chưa quyết định học gì, càng chưa quyết định đi nước nào.",
+"Muốn nâng cao trình độ tiếng Trung phải nghe nhiều xem nhiều, càng phải nói nhiều luyện nhiều.",
+"Đến Trung Quốc học tập, tôi đã học được tiếng Trung, còn hiểu thêm về văn hóa Trung Quốc.",
+"Chỉ khi nghĩ rõ mình thực sự thích gì, mới có thể đưa ra lựa chọn phù hợp nhất.",
+"Chỉ khi mỗi ngày rèn luyện thân thể, mới khỏe mạnh dần lên.",
+"Tôi sợ gặp giáo viên.",
+"Mặt trời mọc từ phía Tây rồi sao?",
+"Tôi chưa muốn đi làm ngay, còn muốn tiếp tục học.",
+"Tôi cho rằng chỉ khi nghĩ rõ mình thực sự thích gì, mới có thể đưa ra lựa chọn phù hợp nhất.",
+"Tết Nguyên Đán nghỉ khoảng bảy tám ngày.",
+"Trong phòng học có năm sáu bạn học sinh đến.",
+"Những bức ảnh này chụp cách đây ba bốn năm chứ?",
+"Cuộc gọi vừa nãy là mẹ tôi gọi đến.",
+"Tôi vừa xem qua một lượt, không muốn xem lại nữa.",
+"Tôi vừa xem video học được cách gói sủi cảo.",
+"Anh ấy mới đến Bắc Kinh được hai tháng.",
+"Chỉ vài ngày không gọi video với anh ấy, tôi đã nhớ anh ấy lắm.",
+"Chỉ cần bạn đồng ý, chúng ta quyết định như vậy.",
+"Chỉ cần bạn giữ ngủ sớm mỗi ngày, sức khỏe nhất định sẽ khá lên.",
+"Từ lúc đó anh ấy đã học hành chăm chỉ.",
+"Từ ngày hôm đó, chúng tôi trở thành bạn tốt.",
+"Tôi đón Tết ở Trung Quốc, thật vui.",
+"Tết Nguyên Đán là lễ hội quan trọng nhất của Trung Quốc, chúng tôi thường về nhà ăn Tết cùng gia đình.",
+"Gia đình chúng tôi vừa gói sủi cảo vừa xem chương trình hội xuân.",
+"Tôi vừa xem video học gói sủi cảo, tôi cùng các bạn gói nhé.",
+"Đó là cách đây ba bốn năm chứ?",
+"Hồi cấp ba anh ấy muốn học y, từ lúc đó đã học hành chăm chỉ.",
+"Từ chuyến du lịch đó, tôi càng thêm hứng thú với văn hóa Trung Quốc."
 ];
 
 /* ==========================================================================
@@ -7071,12 +7653,14 @@ const DATA = {
   SENT1.forEach((s,i) => {
     s.lesson = SENT1_LESSONS[i] || 1;
     s.pinyin = SENT1_PINYIN[i] || '';
+    s.vi = SENT1_VI[i] || '';
   });
   SENT2.forEach((s,i) => {
     s.lesson = SENT2_LESSONS[i] || 1;
     s.pinyin = SENT2_PINYIN[i] || '';
+    s.vi = SENT2_VI[i] || '';
   });
-  SENT3.forEach((s,i) => { s.lesson = SENT3_LESSONS[i] || 1; });
+  SENT3.forEach((s,i) => { s.lesson = SENT3_LESSONS[i] || 1; s.vi = SENT3_VI[i] || ''; });
 }
 
 /* ==========================================================================
@@ -7228,6 +7812,7 @@ let currentGame = null;
 let gameReturn = 'menu';   // 'menu' | 'review'
 
 function showScreen(id){
+  clearQuizTimers();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(id);
   if(el) el.classList.add('active');
@@ -7647,13 +8232,18 @@ function renderReviewContent(){
       el.innerHTML = `
         <div class="sent-list">
           ${sents.map((s,i) => `
-            <div class="sent-item">
+            <div class="sent-item${s.vi ? ' has-vi' : ''}">
               <div class="zh">${i+1}. ${esc(s.full)}</div>
               ${s.pinyin ? `<div class="py">${esc(s.pinyin)}</div>` : ''}
+              ${s.vi ? `<div class="sent-vi">🇻🇳 ${esc(s.vi)}</div>` : ''}
+              ${s.vi ? `<div class="sent-hint">👆 点击显示/隐藏翻译 · Bấm để hiện/ẩn bản dịch</div>` : ''}
             </div>
           `).join('')}
         </div>
       `;
+      el.querySelectorAll('.sent-item.has-vi').forEach(item => {
+        item.addEventListener('click', () => item.classList.toggle('show-vi'));
+      });
     }
   }
 
@@ -7704,6 +8294,11 @@ function bindRvActions(lv, lesson){
    分课测验引擎：汉字 / 词义 / 填空
    ========================================================================== */
 let lqState = null;
+let lqTimer = null, odTimer = null;
+function clearQuizTimers(){
+  if(lqTimer){ clearTimeout(lqTimer); lqTimer = null; }
+  if(odTimer){ clearTimeout(odTimer); odTimer = null; }
+}
 
 function buildLessonQuiz(lv, lesson, type){
   const lessonVocab = getLessonVocab(lv, lesson);
@@ -7813,6 +8408,7 @@ function buildLessonQuiz(lv, lesson, type){
 }
 
 function startLessonQuiz(lv, lesson, type){
+  clearQuizTimers();
   currentLevel = lv;
   document.body.dataset.level = lv;
 
@@ -7916,7 +8512,9 @@ function handleLessonQuiz(btn){
     fb.textContent = `❌ Chưa đúng · 错误！ Đáp án là: ${q.answer}${extra}`;
   }
 
-  setTimeout(() => {
+  if(lqTimer) clearTimeout(lqTimer);
+  lqTimer = setTimeout(() => {
+    lqTimer = null;
     st.idx++;
     renderLessonQuiz();
   }, (st.type === 'meaning' || st.type === 'hanzi') ? 600 : 2400);
@@ -7980,6 +8578,7 @@ function renderResult(score, total, retry){
 let odState = null;
 
 function startOrder(lv, lesson){
+  clearQuizTimers();
   currentLevel = lv;
   document.body.dataset.level = lv;
   const suffix = lesson ? ` · 第${lesson}课` : '';
@@ -8004,7 +8603,9 @@ function startOrder(lv, lesson){
     score: 0,
     available: [],
     selected: [],
-    locked: false
+    locked: false,
+    lv,
+    lesson
   };
   setupOrderQuestion();
 }
@@ -8012,7 +8613,7 @@ function startOrder(lv, lesson){
 function setupOrderQuestion(){
   const st = odState;
   if(st.idx >= st.qs.length){
-    renderResult(st.score, st.qs.length, () => startOrder(currentLevel, null));
+    renderResult(st.score, st.qs.length, () => startOrder(st.lv, st.lesson));
     return;
   }
   const q = st.qs[st.idx];
@@ -8116,7 +8717,9 @@ function checkOrder(){
     fb.textContent = `❌Chưa đúng！ Đáp án: ${q.full}`;
   }
 
-  setTimeout(() => {
+  if(odTimer) clearTimeout(odTimer);
+  odTimer = setTimeout(() => {
+    odTimer = null;
     st.idx++;
     setupOrderQuestion();
   }, ok ? 800 : 3900);
@@ -9145,7 +9748,7 @@ const wordPanel = document.getElementById('wordPanel');
                 let matched = false;
                 for (let item of sorted) {
                     const w = item.word;
-                    if (text.substr(i, w.length) === w) {
+                    if (text.substring(i, i + w.length) === w) {
                         tokens.push({
                             word: w,
                             data: item,
@@ -9184,7 +9787,7 @@ const wordPanel = document.getElementById('wordPanel');
                 syls = chars.map(c => charMap[c] || '');
             }
             return chars.map((c, i) => {
-                return syls[i] ? `<ruby>${c}<rt>${syls[i]}</rt></ruby>` : c;
+                return syls[i] ? `<ruby>${esc(c)}<rt>${esc(syls[i])}</rt></ruby>` : esc(c);
             }).join('');
         }
 
@@ -9197,10 +9800,10 @@ const wordPanel = document.getElementById('wordPanel');
     data-word="${esc(t.word)}" data-pinyin="${esc(t.data.pinyin)}"
     data-loai="${esc(t.data.loai)}" data-nghia="${esc(t.data.nghia)}">${inner}</span>`;
                 } else if (t.isPunct) {
-                    html += t.word;
+                    html += esc(t.word);
                 } else {
                     const py = charMap[t.word];
-                    html += py ? `<ruby>${t.word}<rt>${py}</rt></ruby>` : t.word;
+                    html += py ? `<ruby>${esc(t.word)}<rt>${esc(py)}</rt></ruby>` : esc(t.word);
                 }
             }
             return html;
@@ -9217,7 +9820,7 @@ const wordPanel = document.getElementById('wordPanel');
             doc.pauseData.forEach((item, idx) => {
                 const partsHtml = item.parts.map((part, pi) => {
                     const c = pauseColors[(idx + pi + 1) % pauseColors.length];
-                    return `<span class="pause-part" style="background:${c}22;">${part}</span>`;
+                    return `<span class="pause-part" style="background:${c}22;">${esc(part)}</span>`;
                 }).join('<span class="pause-slash">/</span>');
                 html += `<div class="pause-line">${partsHtml}</div>`;
             });
@@ -9235,16 +9838,16 @@ const wordPanel = document.getElementById('wordPanel');
                 doc.pauseData.forEach(item => {
                     html += `
                         <div class="translate-line">
-                            <div class="translate-zh">${item.zh}</div>
-                            <div class="translate-vi">${item.vi}</div>
+                            <div class="translate-zh">${esc(item.zh)}</div>
+                            <div class="translate-vi">${esc(item.vi)}</div>
                         </div>
                     `;
                 });
             } else {
                 html = `
                     <div class="translate-line">
-                        <div class="translate-zh">${doc.chinese}</div>
-                        <div class="translate-vi">${doc.vietnamese}</div>
+                        <div class="translate-zh">${esc(doc.chinese)}</div>
+                        <div class="translate-vi">${esc(doc.vietnamese)}</div>
                     </div>
                 `;
             }
@@ -9263,20 +9866,20 @@ const wordPanel = document.getElementById('wordPanel');
             detailContent.innerHTML = `
                 <div class="detail-item">
                     <span class="label">汉字 · Hán tự</span>
-                    <div class="value hanzi">${word}</div>
+                    <div class="value hanzi">${esc(word)}</div>
                 </div>
                 <div class="detail-item">
                     <span class="label">拼音 · Phiên âm</span>
-                    <div class="value pinyin">${pinyin}</div>
+                    <div class="value pinyin">${esc(pinyin)}</div>
                 </div>
                 <div class="detail-divider"></div>
                 <div class="detail-item">
                     <span class="label">TỪ LOẠI</span>
-                    <div class="value loai">${loai}</div>
+                    <div class="value loai">${esc(loai)}</div>
                 </div>
                 <div class="detail-item">
                     <span class="label">NGHĨA</span>
-                    <div class="value nghia">${nghia}</div>
+                    <div class="value nghia">${esc(nghia)}</div>
                 </div>
             `;
         }
@@ -9291,9 +9894,9 @@ const wordPanel = document.getElementById('wordPanel');
                 const card = document.createElement('div');
                 card.className = 'doc-card';
                 card.innerHTML = `
-                    <div class="card-icon">${doc.icon || '📄'}</div>
-                    <div class="card-zh">${doc.title}</div>
-                    <div class="card-vi">${doc.subtitle}</div>
+                    <div class="card-icon">${esc(doc.icon || '📄')}</div>
+                    <div class="card-zh">${esc(doc.title)}</div>
+                    <div class="card-vi">${esc(doc.subtitle)}</div>
                 `;
                 card.addEventListener('click', () => openStudy(doc.id));
                 cardGrid.appendChild(card);
