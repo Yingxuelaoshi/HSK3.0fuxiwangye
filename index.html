@@ -1013,7 +1013,7 @@ body{
     --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-* {
+#screen-reading *, #screen-reading *::before, #screen-reading *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -1795,17 +1795,30 @@ button:focus-visible {
     outline-offset: 3px;
 }
 
+/* ============================================================
+   阅读区内边距兜底：高特异性前缀，防止通配符重置把卡片留白压成 0
+   （仅恢复原有 padding / 间距，不改配色与版式）
+   ============================================================ */
+#screen-reading .study-container { padding: 56px 48px 44px; }
+#screen-reading .study-title-area { padding: 9px 22px; }
+#screen-reading .timer-section { padding: 16px 30px; }
+#screen-reading .text-block { padding: 34px 36px; }
+#screen-reading .text-chinese-translate .translate-line { padding: 14px 18px; }
+#screen-reading .word-detail-panel { padding: 26px 24px; }
+#screen-reading .action-btn { padding: 14px 32px; }
+#screen-reading .timer-btn { padding: 9px 22px; }
+
 @media (max-width: 960px) {
     #screen-reading { padding: 24px 16px 40px; }
 
-    .study-container {
+    #screen-reading .study-container {
         padding: 48px 28px 32px;
         border-radius: var(--r-xl);
     }
 
     .main-content { flex-direction: column; gap: 20px; }
 
-    .word-detail-panel {
+    #screen-reading .word-detail-panel {
         flex: 0 0 auto;
         width: 100%;
         min-height: 200px;
@@ -1849,7 +1862,7 @@ button:focus-visible {
     .doc-card .card-zh { font-size: 1rem; letter-spacing: 0.04em; line-height: 1.4; }
     .doc-card .card-vi { font-size: 0.72rem; margin-top: 5px; line-height: 1.35; }
 
-    .study-container {
+    #screen-reading .study-container {
         padding: 42px 18px 24px;
         border-radius: var(--r-lg);
     }
@@ -1865,7 +1878,7 @@ button:focus-visible {
     .study-title-area { margin-bottom: 20px; padding-top: 4px; }
     .study-title-area h2 { gap: 10px; letter-spacing: 0.12em; padding-left: 0.12em;}
 
-    .timer-section {
+    #screen-reading .timer-section {
         padding: 14px 16px;
         gap: 12px;
         border-radius: var(--r-lg);
@@ -1881,7 +1894,7 @@ button:focus-visible {
         gap: 8px;
         justify-content: center;
     }
-    .timer-btn {
+    #screen-reading .timer-btn {
         font-size: 0.82rem;
         padding: 8px 16px;
         flex: 1 1 auto;
@@ -1896,7 +1909,7 @@ button:focus-visible {
         line-height: 1.55;
     }
 
-    .text-block {
+    #screen-reading .text-block {
         padding: 22px 18px;
         border-radius: var(--r-md);
     }
@@ -1909,7 +1922,7 @@ button:focus-visible {
 
     .text-chinese-translate .translate-zh { font-size: 1.05rem; }
     .text-chinese-translate .translate-vi { font-size: 0.88rem; }
-    .text-chinese-translate .translate-line {
+    #screen-reading .text-chinese-translate .translate-line {
         padding: 10px 12px;
         margin-bottom: 12px;
         border-radius: var(--r-xs);
@@ -1919,7 +1932,7 @@ button:focus-visible {
     .text-chinese-pause .pause-part { padding: 2px 5px; }
     .text-chinese-pause .pause-slash { font-size: 1em; margin: 0 4px; }
 
-    .word-detail-panel {
+    #screen-reading .word-detail-panel {
         padding: 20px 18px;
         min-height: 160px;
         max-height: 260px;
@@ -1927,7 +1940,7 @@ button:focus-visible {
     }
     .word-detail-panel .detail-item .value.hanzi { font-size: 1.65rem; }
 
-    .bottom-actions {
+    #screen-reading .bottom-actions {
         position: fixed;
         left: 0;
         right: 0;
@@ -1971,7 +1984,7 @@ button:focus-visible {
     .text-chinese,
     .text-chinese-pause { font-size: 1.05rem; line-height: 2; }
 
-    .action-btn { font-size: 0.72rem; padding: 10px 6px; }
+    #screen-reading .action-btn { font-size: 0.72rem; padding: 10px 6px; }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -2391,6 +2404,78 @@ button:focus-visible {
   </div>
 </footer>
 <script>
+/* ============================================================
+   选词填空工具区（A）
+   ============================================================ */
+const CLOZE_PUNCT_RE = /^[\s，。！？、；：""''（）《》〈〉【】…—·,.!?;:"'()\[\]{}<>~@#$%^&*+=|\\\/\-_]+$/;
+function clozeIsPunct(t){ return !t || CLOZE_PUNCT_RE.test(t); }
+
+function clozeShuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function clozeHas(container, w){
+  if(!container || !w) return false;
+  if(Array.isArray(container)) return container.includes(w);
+  if(container instanceof Set) return container.has(w);
+  if(typeof container === 'string') return container.split(/[,，\s]+/).includes(w);
+  if(container instanceof Map) return container.has(w);
+  if(typeof container === 'object') return Object.prototype.hasOwnProperty.call(container, w);
+  return false;
+}
+
+/* 近义组：先填这些，后面可继续加 */
+const CLOZE_SYNONYM_GROUPS = [
+  ['高兴','开心','快乐'],
+  ['漂亮','好看','美丽'],
+  ['说','讲','谈'],
+  ['看','见','瞧','望'],
+  ['做','干','搞'],
+  ['帮','帮助','帮忙'],
+  ['买','购买'],
+  ['到','去','来','回'],
+  ['能','会','可以'],
+  ['但是','可是','不过'],
+  ['因为','由于'],
+  ['马上','立刻','立即'],
+  ['喜欢','爱','爱好'],
+  ['知道','明白','懂'],
+  ['房间','屋子'],
+  ['商店','商场','店'],
+];
+
+/* 单字虚词：尽量不挖，避免多解 */
+const CLOZE_WEAK_SINGLE = new Set([
+  '的','了','着','过','吗','呢','吧','啊','地','得','是','在','有',
+  '和','跟','与','就','都','也','还','又','再','才','只','不','没',
+  '很','太','最','更'
+]);
+
+function clozeSameSynonymGroup(a, b){
+  if(!a || !b) return false;
+  return CLOZE_SYNONYM_GROUPS.some(g => g.includes(a) && g.includes(b));
+}
+
+const CLOZE_STRICT_SIMILAR = false;
+
+function clozeTooSimilar(a, b){
+  if(!a || !b) return true;
+  if(a === b) return true;
+  if(a.includes(b) || b.includes(a)) return true;
+  if(clozeSameSynonymGroup(a, b)) return true;
+  if(CLOZE_STRICT_SIMILAR && a.length === b.length && a[0] === b[0]) return true;
+  return false;
+}
+
+/* 词性取第一段：'động từ/danh từ' → 'động từ' */
+function primaryPos(pos){
+  return String(pos || '').split(/[\/、,，]/)[0].trim();
+}
 /* ==========================================================================
    数据区
    ========================================================================== */
@@ -4650,6 +4735,33 @@ const FC3 = [
 ["作者","zuòzhě","danh từ","tác giả"],
 ["做客","zuò//kè","làm khách"]
 ];
+/* ============================================================
+   wordInfo 构建（B）：放在所有 FC 数据之后
+   ============================================================ */
+const wordInfo = (() => {
+  const info = {};
+  const lists = [];
+  if (typeof FC1 !== 'undefined') lists.push(FC1);
+  if (typeof FC2 !== 'undefined') lists.push(FC2);
+  if (typeof FC3 !== 'undefined') lists.push(FC3);
+
+  lists.forEach(list => {
+    (list || []).forEach(row => {
+      if(!row || !row[0]) return;
+      const raw = String(row[0]).trim();
+      const clean = raw.replace(/[（(].*?[)）]/g, '').trim();
+      if(!clean || clean.length < 1) return;
+      if(!info[clean]){
+        info[clean] = {
+          pinyin: row[1] || '',
+          pos:    row[2] || '',
+          meaning: row[3] || ''
+        };
+      }
+    });
+  });
+  return info;
+})();
 
 /* ---------- HSK1 综合词汇 ---------- */
 const VOCAB1 = [
@@ -7041,6 +7153,58 @@ function buildOptions(correct){
   const distractors = pickN(pool, Math.min(n-1, pool.length));
   return shuffle([String(correct), ...distractors]);
 }
+/* ============================================================
+   buildClozeOptions（C）
+   ============================================================ */
+function buildClozeOptions(target, scopePool, allPool, n, sentenceWordSet, wordInfoMap){
+  n = n || 4;
+  const seen = new Set([target]);
+  const banned = new Set(sentenceWordSet || []);
+  banned.delete(target);
+
+  const targetLen = target.length;
+  const targetPos = primaryPos(wordInfoMap && wordInfoMap[target] && wordInfoMap[target].pos);
+
+  const scoreOf = (w) => {
+    let s = 0;
+    if(w.length === targetLen) s += 2;
+    const p = primaryPos(wordInfoMap && wordInfoMap[w] && wordInfoMap[w].pos);
+    if(targetPos && p && p === targetPos) s += 3;
+    return s;
+  };
+
+  const pool = [];
+  const pushAll = (arr) => {
+    if(!arr) return;
+    const list = Array.isArray(arr) ? arr : Array.from(arr);
+    for(const w of list){
+      if(!w || clozeIsPunct(w)) continue;
+      if(seen.has(w) || banned.has(w)) continue;
+      if(clozeTooSimilar(target, w)) continue;
+      seen.add(w);
+      pool.push(w);
+    }
+  };
+  pushAll(scopePool);
+  pushAll(allPool);
+
+  pool.sort((a, b) => scoreOf(b) - scoreOf(a));
+
+  const picked = [];
+  for(const w of pool){
+    if(picked.length >= n - 1) break;
+    if(picked.some(p => clozeTooSimilar(p, w))) continue;
+    picked.push(w);
+  }
+  if(picked.length < n - 1){
+    for(const w of pool){
+      if(picked.length >= n - 1) break;
+      if(picked.includes(w)) continue;
+      picked.push(w);
+    }
+  }
+  return clozeShuffle([target, ...picked]);
+}
 
 /* ---------- 数据访问 ---------- */
 function getLessons(lv){
@@ -7588,30 +7752,61 @@ function buildLessonQuiz(lv, lesson, type){
       answer: w.hanzi, extra: w.pinyin
     }));
   }
-
-  /* ---- 选词填空 ---- */
+  /* ---- 选词填空：从例句中挖空生成题目 ---- */
   if(type === 'cloze'){
-    const sents = getLessonSentences(lv, lesson);
-    if(!sents.length) return [];
-    const qs = [];
-    sents.forEach(s => {
-      let candidates = s.words.filter(w => scopeHanzi.includes(w) && w.length >= 2);
-      if(!candidates.length) candidates = s.words.filter(w => scopeHanzi.includes(w));
-      if(!candidates.length) candidates = s.words.filter(w => w.length >= 2 && !/[，。！？、]/.test(w));
-      if(!candidates.length) candidates = s.words.filter(w => !/[，。！？、]/.test(w));
+    const sentences = getLessonSentences(lv, lesson);
+    if(!sentences.length) return [];
+
+    const infoMap = {};
+    allVocab.forEach(v => { if(v && v.hanzi) infoMap[v.hanzi] = v; });
+
+    const scopePool = scopeHanzi.slice();
+    const allPool   = allHanzi.slice();
+
+    const picked = pickN(sentences, Math.min(lesson ? sentences.length : 10, sentences.length));
+    const questions = [];
+
+    picked.forEach(s => {
+      const words = Array.isArray(s.words) ? s.words : [];
+      const sentenceSet = new Set(words.filter(w => !clozeIsPunct(w)));
+
+      const candidates = words.map((w, i) => ({ w, i }))
+        .filter(({ w }) => w && !clozeIsPunct(w))
+        .filter(({ w }) => !CLOZE_WEAK_SINGLE.has(w))
+        .filter(({ w }) => infoMap[w]);
+
       if(!candidates.length) return;
 
-      const target = candidates[Math.floor(Math.random() * candidates.length)];
-      const blanked = s.words.map(w => w === target ? '____' : w).join('');
+      candidates.sort((a, b) => b.w.length - a.w.length);
+      const top = candidates.filter(c => c.w.length === candidates[0].w.length);
+      const { w: target, i: blankIdx } = top[Math.floor(Math.random() * top.length)];
 
-      qs.push({
-        label: 'Chọn từ điền vào chỗ trống · 选词填空',
-        prompt: blanked, promptType: 'blank', sub: '',
-        options: buildOptions(target, scopeHanzi, allHanzi, 4),
-        answer: target, extra: s.full
+      const options = buildClozeOptions(
+        target, scopePool, allPool, 4, sentenceSet, infoMap
+      );
+
+      if(options.length < 4){
+        const seen = new Set(options);
+        for(const w of allPool){
+          if(options.length >= 4) break;
+          if(!seen.has(w) && !sentenceSet.has(w)){ seen.add(w); options.push(w); }
+        }
+      }
+
+      const promptWords = words.slice();
+      promptWords[blankIdx] = '____';
+      const prompt = promptWords.join('');
+
+      questions.push({
+        label: 'Chọn từ điền vào chỗ trống · 选出填入句子的词语',
+        prompt, promptType: 'blank', sub: s.pinyin || '',
+        options, answer: target,
+        extra: infoMap[target] ? infoMap[target].vi : '',
+        _sw: [...sentenceSet]
       });
     });
-    return pickN(qs, Math.min(10, qs.length));
+
+    return questions;
   }
 
   return [];
@@ -8853,8 +9048,75 @@ const wordPanel = document.getElementById('wordPanel');
         // 个别词表未覆盖的汉字，补充拼音
         const EXTRA_PINYIN = {
             '保': 'bǎo',
-            '障': 'zhàng'
+            '障': 'zhàng',
+            '到': 'dào',
+            '你': 'nǐ',
+            '会': 'huì',
+            '给': 'gěi',
+            '不': 'bù',
+            '要': 'yào',
+            '慢': 'màn',
+            '就': 'jiù',
+            '没': 'méi',
+            '有': 'yǒu',
+            '像': 'xiàng',
+            '种': 'zhòng',
+            '下': 'xià',
+            '一': 'yī',
+            '棵': 'kē',
+            '小': 'xiǎo',
+            '写': 'xiě',
+            '了': 'le',
+            '站': 'zhàn',
+            '每': 'měi',
+            '个': 'gè',
+            '的': 'de',
+            '人': 'rén',
+            '滴': 'dī',
+            '都': 'dōu'
         };
+
+        /**
+         * 把一段连写（无空格）的拼音按常用声母/韵母边界切成音节数组。
+         * 仅在音节数与汉字数不一致时作为兜底拆分。
+         */
+        function splitPinyinSyllables(str, expect) {
+            const tokens = str.trim().split(/\s+/).filter(Boolean);
+            if (tokens.length === expect) return tokens;
+            if (tokens.length === 1 && expect > 1) {
+                const raw = tokens[0];
+                const INIT = ['zh', 'ch', 'sh', 'b', 'p', 'm', 'f', 'd', 't', 'n', 'l',
+                    'g', 'k', 'h', 'j', 'q', 'x', 'r', 'z', 'c', 's', 'y', 'w'];
+                const VOW = 'aeiouüāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü';
+                const syls = [];
+                let i = 0;
+                while (i < raw.length) {
+                    let init = '';
+                    for (const s of INIT) {
+                        if (raw.startsWith(s, i)) { init = s; break; }
+                    }
+                    let j = i + init.length;
+                    while (j < raw.length && VOW.includes(raw[j])) j++;
+                    if (raw.startsWith('ng', j)) j += 2;
+                    else if (raw[j] === 'n') j += 1;
+                    syls.push(raw.slice(i, j));
+                    i = j;
+                }
+                if (syls.length === expect) return syls;
+                // 第二趟：韵母后再遇声母时回退切分（如 jiāndū → jiān/dū）
+                if (syls.length === expect - 1) {
+                    const merged = syls[0];
+                    for (const s of INIT) {
+                        const k = merged.indexOf(s, 1);
+                        if (k > 0) {
+                            const head = merged.slice(0, k), tail = merged.slice(k);
+                            return [head, tail, ...syls.slice(1)];
+                        }
+                    }
+                }
+            }
+            return tokens;
+        }
 
         /**
          * 由词表构建「单字 → 拼音」映射表，
@@ -8865,7 +9127,7 @@ const wordPanel = document.getElementById('wordPanel');
             for (const item of vocab) {
                 if (!item.pinyin) continue;
                 const chars = Array.from(item.word);
-                const syls = item.pinyin.trim().split(/\s+/);
+                const syls = splitPinyinSyllables(item.pinyin, chars.length);
                 if (chars.length === syls.length) {
                     for (let i = 0; i < chars.length; i++) {
                         if (!map[chars[i]]) map[chars[i]] = syls[i];
@@ -8917,7 +9179,7 @@ const wordPanel = document.getElementById('wordPanel');
          */
         function buildRubyHTML(word, pinyin, charMap) {
             const chars = Array.from(word);
-            let syls = pinyin ? pinyin.trim().split(/\s+/) : [];
+            let syls = pinyin ? splitPinyinSyllables(pinyin, chars.length) : [];
             if (syls.length !== chars.length) {
                 syls = chars.map(c => charMap[c] || '');
             }
@@ -8931,7 +9193,9 @@ const wordPanel = document.getElementById('wordPanel');
             for (let t of tokens) {
                 if (t.data) {
                     const inner = buildRubyHTML(t.word, t.data.pinyin, charMap);
-                    html += `<span class="word-token" data-word="${t.word}" data-pinyin="${t.data.pinyin}" data-loai="${t.data.loai}" data-nghia="${t.data.nghia}">${inner}</span>`;
+                    html += `<span class="word-token"
+    data-word="${esc(t.word)}" data-pinyin="${esc(t.data.pinyin)}"
+    data-loai="${esc(t.data.loai)}" data-nghia="${esc(t.data.nghia)}">${inner}</span>`;
                 } else if (t.isPunct) {
                     html += t.word;
                 } else {
@@ -9352,8 +9616,51 @@ document.addEventListener('DOMContentLoaded', () => {
   buildHome();
   showScreen('screen-home');
 });
+/* ============================================================
+   选词填空自检（E）：控制台手动调用
+   ============================================================ */
+function auditClozeQuestions(qs){
+  const issues = [];
+  const answerSeen = new Map();
+
+  qs.forEach((q, idx) => {
+    const no = idx + 1;
+    const blanks = (q.prompt.match(/____/g) || []).length;
+    if(blanks !== 1) issues.push(`第${no}题：空格数 = ${blanks}`);
+
+    if(!Array.isArray(q.options) || q.options.length !== 4)
+      issues.push(`第${no}题：选项数 = ${q.options ? q.options.length : 0}`);
+
+    if(q.options && new Set(q.options).size !== q.options.length)
+      issues.push(`第${no}题：选项有重复 → ${q.options.join(' / ')}`);
+
+    const ansCount = q.options ? q.options.filter(o => o === q.answer).length : 0;
+    if(ansCount !== 1) issues.push(`第${no}题：答案出现 ${ansCount} 次`);
+
+    if(Array.isArray(q._sw)){
+      const sw = new Set(q._sw);
+      sw.delete(q.answer);
+      q.options.forEach(o => {
+        if(o !== q.answer && sw.has(o))
+          issues.push(`第${no}题：干扰项「${o}」在句中已出现`);
+      });
+    }
+
+    q.options.forEach(o => {
+      if(o !== q.answer && clozeTooSimilar(q.answer, o))
+        issues.push(`第${no}题：选项「${o}」与答案「${q.answer}」太像`);
+    });
+
+    answerSeen.set(q.answer, (answerSeen.get(q.answer) || 0) + 1);
+  });
+
+  answerSeen.forEach((cnt, ans) => {
+    if(cnt > 1) issues.push(`答案「${ans}」在同一份练习中出现 ${cnt} 次`);
+  });
+
+  return issues;
+}
 </script>
 
 </body>
 </html>
-<!-- （注：内容由AI生成） -->
